@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 import type { PublicDataset } from "@/lib/data";
 import { displayName } from "@/lib/data/selectors";
-import { memberAuthors, sharedPublications } from "@/lib/data/relationships";
+import { memberAuthors, recentWindow, sharedPublications } from "@/lib/data/relationships";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { palette } from "@/config/palette";
 
@@ -28,7 +28,8 @@ export function CollaborationMap({ data }: { data: PublicDataset }) {
   const H = compact ? 560 : 480;
 
   const model = useMemo(() => {
-    const pubs = sharedPublications(data);
+    const recent = new Set(recentWindow(data).publications.map((p) => p.id));
+    const pubs = sharedPublications(data).filter((p) => recent.has(p.id));
     const people = data.profiles.filter((p) => pubs.some((pub) => memberAuthors(pub, data).some((a) => a.id === p.id)));
     const n = people.length;
     const pos = new Map(

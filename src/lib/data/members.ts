@@ -12,6 +12,7 @@
  * co-written by several members appear on each of their profiles.
  */
 import type { PublicProfile, Publication, PublicationAuthor } from "@/types/domain";
+import scholarPublications from "./scholar-publications.json";
 
 const SHUZLINA = "p-shuzlina-abdul-rahman";
 const AZLIZA = "p-azliza-mohd-ali";
@@ -109,7 +110,7 @@ const pub = (p: Pub): Publication => ({ ...p, isDemo: false });
  * Ten most recent publications per member (Google Scholar, sorted by date,
  * October 2026), de-duplicated across members.
  */
-export const memberPublications: Publication[] = [
+const curatedPublications: Publication[] = [
   // ── Shared between several RIGIS members ─────────────────────────────
   pub({
     id: "pub-2026-yolo-solid-waste",
@@ -472,3 +473,23 @@ export const memberPublications: Publication[] = [
     authors: [ext("N. A. B. Iqbal Basheer"), sharifalillah(), ext("S. S. Kasim"), azliza(), ext("N. H. Abdul Hamid")],
   }),
 ];
+
+const normTitle = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+
+/**
+ * Full publication records, generated from the lecturers' Google Scholar
+ * profiles and enriched with OpenAlex (see docs/publications-import.md).
+ * Where the generated record lacks a confirmed author list, the hand-checked
+ * entry above (if any) is used instead.
+ */
+export const memberPublications: Publication[] = (() => {
+  const curated = new Map(curatedPublications.map((p) => [normTitle(p.title), p]));
+  const used = new Set<string>();
+  const merged = (scholarPublications as Publication[]).map((p) => {
+    const hand = curated.get(normTitle(p.title));
+    if (hand) used.add(normTitle(p.title));
+    return hand && p.authorsIncomplete ? hand : p;
+  });
+  for (const [key, p] of curated) if (!used.has(key)) merged.push(p);
+  return merged;
+})();

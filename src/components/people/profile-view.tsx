@@ -96,7 +96,7 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
               )}
               <dl className="mt-auto grid grid-cols-3 gap-4 border-t border-border pt-6 max-sm:mt-8 sm:pt-8">
                 {[
-                  { value: publications.length, label: "Recent publications" },
+                  { value: publications.length, label: "Publications listed" },
                   { value: collaborators.length, label: "Co-authors in RIGIS" },
                   { value: projects.length, label: "Approved projects" },
                 ].map((f) => (

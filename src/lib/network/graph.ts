@@ -216,12 +216,14 @@ export function edgesOf(graph: NetworkGraph, id: string) {
 }
 
 /**
- * Three-column layered layout: areas | researchers | work (projects, then
- * publications). Researchers sit in the middle because they connect both
- * sides; outer columns are ordered by the average row of their researchers to
- * reduce crossings, and shorter columns are spread over the tallest one.
+ * Layered layout: areas | researchers | work (projects, then publications).
+ * Researchers sit in the middle because they connect both sides; outer
+ * columns are ordered by the average row of their researchers to reduce
+ * crossings, and shorter columns are spread over the tallest one. A long work
+ * column wraps into several columns (filled top to bottom, so each
+ * researcher's papers stay together) to keep the whole map roughly landscape.
  */
-export function layoutNetwork(graph: NetworkGraph, opts = { colGap: 380, rowGap: 96 }) {
+export function layoutNetwork(graph: NetworkGraph, opts = { colGap: 380, rowGap: 96, workGap: 300 }) {
   const of = (k: NetworkNodeKind) => graph.nodes.filter((n) => n.kind === k);
   const researchers = of("researcher").sort((a, b) => a.label.localeCompare(b.label));
   const order = new Map(researchers.map((n, i) => [n.id, i] as const));
@@ -232,12 +234,27 @@ export function layoutNetwork(graph: NetworkGraph, opts = { colGap: 380, rowGap:
   };
   const sortBy = (list: NetworkNode[]) => [...list].sort((a, b) => bary(a) - bary(b) || a.label.localeCompare(b.label));
 
-  const columns = [sortBy(of("area")), researchers, [...sortBy(of("project")), ...sortBy(of("publication"))]];
-  const height = Math.max(...columns.map((c) => c.length), 1) * opts.rowGap;
+  const areas = sortBy(of("area"));
+  const work = [...sortBy(of("project")), ...sortBy(of("publication"))];
+  // Rows per work column: about 1.6:1 width to height, never shorter than the other columns.
+  const rows = Math.max(
+    areas.length,
+    researchers.length,
+    Math.min(work.length, Math.ceil(Math.sqrt((work.length * opts.workGap) / (1.6 * opts.rowGap)))),
+    1,
+  );
+  const height = rows * opts.rowGap;
   const positions = new Map<string, { x: number; y: number }>();
-  columns.forEach((col, ci) => {
+  const place = (col: NetworkNode[], x: number) => {
     const step = height / Math.max(col.length, 1);
-    col.forEach((n, ri) => positions.set(n.id, { x: ci * opts.colGap, y: (ri + 0.5) * step }));
-  });
+    col.forEach((n, ri) => positions.set(n.id, { x, y: (ri + 0.5) * step }));
+  };
+  place(areas, 0);
+  place(researchers, opts.colGap);
+  if (work.length <= rows) place(work, 2 * opts.colGap);
+  else for (let i = 0; i * rows < work.length; i++) {
+    const chunk = work.slice(i * rows, (i + 1) * rows);
+    chunk.forEach((n, ri) => positions.set(n.id, { x: 2 * opts.colGap + i * opts.workGap, y: (ri + 0.5) * opts.rowGap }));
+  }
   return positions;
 }

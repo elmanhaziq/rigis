@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { useReducedMotion } from "motion/react";
 import type { PublicDataset } from "@/lib/data";
 import { displayName } from "@/lib/data/selectors";
-import { areasForInterest, collaboratorsFor, memberAuthors } from "@/lib/data/relationships";
+import { areasForInterest, collaboratorsFor, memberAuthors, recentWindow } from "@/lib/data/relationships";
 import { cn } from "@/lib/utils";
 import { palette } from "@/config/palette";
 
@@ -43,7 +43,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
     }));
 
     const soloCount = new Map<string, number>();
-    const pubs = data.publications
+    const pubs = recentWindow(data).publications
       .map((pub) => {
         const authors = memberAuthors(pub, data).filter((a) => posOf.has(a.id));
         if (authors.length === 0) return null;
@@ -74,6 +74,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
     return { people, areas, pubs, interestLinks, posOf };
   }, [data]);
 
+  const { since } = recentWindow(data);
   const areaPos = new Map(model.areas.map((a) => [a.area.id, a.pos]));
   const activeProfile = active ? model.people.find((p) => p.profile.id === active)?.profile : undefined;
   const activeStats = useMemo(() => {
@@ -246,7 +247,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
         {activeProfile && activeStats ? (
           <>
             <span className="font-heading text-base text-white">{displayName(activeProfile)}</span>
-            {" "}— {activeStats.pubs} recent publications, written with {activeStats.collaborators} RIGIS{" "}
+            {" "}— {activeStats.pubs} publications since {since}; has written with {activeStats.collaborators} RIGIS{" "}
             {activeStats.collaborators === 1 ? "colleague" : "colleagues"}.
             <Link
               href={`/people/${activeProfile.slug}/`}
@@ -257,7 +258,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
           </>
         ) : (
           <>
-            The group at a glance. Portraits are researchers; each point is a recent paper, in{" "}
+            The group since {since}. Portraits are researchers; each point is a paper, in{" "}
             <span className="text-brass">gold</span> where two or more members wrote it together; diamonds are research areas.{" "}
             <span className={cn("text-white/60")}>Select a researcher to see their part.</span>
           </>

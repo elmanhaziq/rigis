@@ -129,6 +129,8 @@ export interface Publication {
   doi: string | null;
   url: string | null;
   authors: PublicationAuthor[];
+  /** True when only the RIGIS member is known; the full list is at the source link. */
+  authorsIncomplete?: boolean;
   isDemo: boolean;
 }
 

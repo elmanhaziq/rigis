@@ -100,3 +100,13 @@ export function collaboratorsFor(data: PublicDataset, profileId: string): Collab
     .filter((c) => c.profile)
     .sort((a, b) => b.sharedPublications - a.sharedPublications || a.profile.fullName.localeCompare(b.profile.fullName));
 }
+
+/**
+ * The window used by the homepage figures: the latest three publication
+ * years present in the data. Full records stay on profiles and the network.
+ */
+export function recentWindow(data: PublicDataset, years = 3) {
+  const maxYear = Math.max(0, ...data.publications.map((p) => p.year ?? 0));
+  const since = maxYear - (years - 1);
+  return { since, publications: data.publications.filter((p) => (p.year ?? 0) >= since) };
+}

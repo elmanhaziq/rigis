@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Network } from "lucide-react";
-import { getPublicDataset } from "@/lib/data";
-import { sharedPublications } from "@/lib/data/relationships";
+import { getPublicDataset, slimDataset } from "@/lib/data";
+import { recentWindow, sharedPublications } from "@/lib/data/relationships";
 import { Button } from "@/components/ui/button";
 import { StoryHero } from "@/components/homepage/story-hero";
 import { IdentityScene } from "@/components/homepage/identity-scene";
@@ -50,8 +50,12 @@ function SceneHeader({
  * Every scene is plain, readable HTML first; interactivity is layered on top.
  */
 export default async function HomePage() {
-  const data = await getPublicDataset();
-  const shared = sharedPublications(data).length;
+  const fullData = await getPublicDataset();
+  const { since, publications: recentPubs } = recentWindow(fullData);
+  // Client components receive a slimmed copy; counts above use the full record.
+  const data = slimDataset(fullData, since);
+  const recentIds = new Set(recentPubs.map((p) => p.id));
+  const shared = sharedPublications(data).filter((p) => recentIds.has(p.id)).length;
 
   return (
     <>
@@ -102,7 +106,7 @@ export default async function HomePage() {
             inverted
             eyebrow="Collaboration"
             title="Who works with whom"
-            description={`${shared} recent papers were written by two or more RIGIS researchers. The map below is drawn directly from those author lists.`}
+            description={`Since ${since}, ${shared} papers were written by two or more RIGIS researchers. The map below is drawn directly from those author lists.`}
             action={
               <Button asChild className="self-start bg-white text-purple-700 hover:bg-purple-50">
                 <Link href="/network/">

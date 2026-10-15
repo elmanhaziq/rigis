@@ -66,3 +66,21 @@ export const isDemoMode = true;
  * after the last build can load client-side.
  */
 export const FALLBACK_SLUG = "_";
+
+/**
+ * A lighter copy of the dataset for client components that only need
+ * relationships. Publications in the recent window keep their full record
+ * (with RIGIS-member authors only); older ones keep just their identity,
+ * year and RIGIS authors, which is all the counts need. Keeps the homepage
+ * payload small as records grow.
+ */
+export function slimDataset(data: PublicDataset, recentSince: number): PublicDataset {
+  return {
+    ...data,
+    publications: data.publications.map((p) => {
+      const authors = p.authors.filter((a) => a.profileId !== null);
+      if ((p.year ?? 0) >= recentSince) return { ...p, authors };
+      return { ...p, title: "", venue: null, doi: null, url: null, publishedOn: null, authors };
+    }),
+  };
+}

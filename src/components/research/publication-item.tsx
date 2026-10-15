@@ -53,6 +53,9 @@ export function PublicationItem({
               </span>
             );
           })}
+          {publication.authorsIncomplete && (
+            <span className="text-muted-foreground"> and co-authors (full list on the source record)</span>
+          )}
         </p>
         <p className="mt-1 text-[0.8125rem] leading-relaxed text-muted-foreground">
           {typeLabel[publication.publicationType]}

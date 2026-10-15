@@ -13,7 +13,7 @@ import { HeroConstellation } from "./hero-constellation";
 export function StoryHero({ data }: { data: PublicDataset }) {
   const facts = [
     { value: data.profiles.length, label: "Researchers" },
-    { value: data.publications.length, label: "Recent publications" },
+    { value: data.publications.length, label: "Publications listed" },
     { value: sharedPublications(data).length, label: "Written together" },
     { value: data.areas.length, label: "Research areas" },
   ];

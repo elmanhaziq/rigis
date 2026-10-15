@@ -19,7 +19,7 @@ export default async function PeoplePage() {
     profiles.map((p) => {
       const pubs = publicationsForProfile(data, p.id).length;
       const co = collaboratorsFor(data, p.id).length;
-      return [p.id, `${pubs} recent publications · ${co} co-author${co === 1 ? "" : "s"} in RIGIS`];
+      return [p.id, `${pubs} publications · ${co} co-author${co === 1 ? "" : "s"} in RIGIS`];
     }),
   );
   return (
@@ -30,7 +30,7 @@ export default async function PeoplePage() {
         dek="Academics, researchers and students working on intelligent systems. Profiles are maintained by the members themselves and published after review."
         facts={[
           { value: profiles.length, label: profiles.length === 1 ? "Researcher" : "Researchers" },
-          { value: data.publications.length, label: "Recent publications listed" },
+          { value: data.publications.length, label: "Publications listed" },
           { value: sharedPublications(data).length, label: "Written together" },
         ]}
       />

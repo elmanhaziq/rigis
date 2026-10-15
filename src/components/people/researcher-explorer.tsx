@@ -70,7 +70,7 @@ export function ResearcherExplorer({ data }: { data: PublicDataset }) {
               </span>
               {p.position && <span className="mt-1 block text-sm text-muted-foreground">{p.position}</span>}
               <span className="mt-3 block border-t border-border pt-3 text-[0.8125rem] text-muted-foreground">
-                {publicationsForProfile(data, p.id).length} recent publications
+                {publicationsForProfile(data, p.id).length} publications
                 <span className="hidden sm:inline"> · open profile</span>
               </span>
             </Link>
