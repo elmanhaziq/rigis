@@ -22,7 +22,18 @@ function normalise(s: string) {
   return s.trim().toLowerCase();
 }
 
-export function PeopleDirectory({ profiles }: { profiles: PublicProfile[] }) {
+/** Below this many people, search and filters add friction rather than help. */
+const FILTER_THRESHOLD = 9;
+
+export function PeopleDirectory({
+  profiles,
+  meta = {},
+}: {
+  profiles: PublicProfile[];
+  /** Optional one-line factual summary per profile id. */
+  meta?: Record<string, string>;
+}) {
+  const showFilters = profiles.length >= FILTER_THRESHOLD;
   const [query, setQuery] = useQueryState("q");
   const [role, setRole] = useQueryState("role");
   const [interest, setInterest] = useQueryState("interest");
@@ -57,6 +68,7 @@ export function PeopleDirectory({ profiles }: { profiles: PublicProfile[] }) {
 
   return (
     <div>
+      {showFilters && (
       <div role="search" aria-label="Filter researchers" className="grid gap-4 border-b border-border pb-8 md:grid-cols-12 md:items-end">
         <SearchField
           id="people-search"
@@ -90,6 +102,9 @@ export function PeopleDirectory({ profiles }: { profiles: PublicProfile[] }) {
         />
       </div>
 
+      )}
+
+      {showFilters && (
       <div className="mt-6 flex min-h-10 flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-muted-foreground" aria-live="polite">
           {filtered.length === profiles.length
@@ -102,6 +117,7 @@ export function PeopleDirectory({ profiles }: { profiles: PublicProfile[] }) {
           </Button>
         )}
       </div>
+      )}
 
       {filtered.length === 0 ? (
         <EmptyState
@@ -122,18 +138,18 @@ export function PeopleDirectory({ profiles }: { profiles: PublicProfile[] }) {
           }
         />
       ) : (
-        <div className="mt-6 space-y-16">
+        <div className={showFilters ? "mt-6 space-y-16" : "space-y-16"}>
           {groups.map((g) => (
             <section key={g.label} aria-labelledby={`group-${g.key[0]}`}>
-              <h2 id={`group-${g.key[0]}`} className="flex items-center gap-4 font-heading text-xl font-bold">
+              <h2 id={`group-${g.key[0]}`} className="eyebrow flex items-center gap-4">
                 {g.label}
                 <span className="h-px flex-1 bg-border" aria-hidden="true" />
-                <span className="text-sm font-medium text-muted-foreground tabular-nums">{g.people.length}</span>
+                <span className="tabular-nums">{g.people.length}</span>
               </h2>
-              <ul className="mt-8 grid grid-cols-2 gap-x-5 gap-y-10 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-8">
+              <ul className="mt-8 grid grid-cols-2 gap-x-5 gap-y-12 md:grid-cols-3 lg:grid-cols-4 lg:gap-x-10">
                 {g.people.map((p) => (
                   <li key={p.id}>
-                    <ResearcherCard profile={p} />
+                    <ResearcherCard profile={p} meta={meta[p.id]} />
                   </li>
                 ))}
               </ul>

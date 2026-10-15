@@ -37,7 +37,7 @@ export function ProfileAvatar({
     >
       <span
         className={cn(
-          "font-heading text-[clamp(1.75rem,6vw,3rem)] font-extrabold tracking-[0.04em] text-purple-700/80",
+          "font-heading text-[clamp(1.75rem,6vw,3rem)] font-medium tracking-[0.04em] text-purple-700/80",
           textClassName,
         )}
         aria-hidden="true"

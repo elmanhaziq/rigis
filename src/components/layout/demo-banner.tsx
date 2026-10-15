@@ -5,11 +5,11 @@ import { cn } from "@/lib/utils";
 /** Site-wide notice shown while parts of the site are not yet final. */
 export function DemoBanner() {
   return (
-    <div role="note" className="bg-navy-900 text-white">
+    <div role="note" className="border-b border-purple-400/40 bg-purple-50 text-navy-900">
       <div className="container-page flex items-start gap-2.5 py-2 text-[0.8125rem] leading-snug sm:items-center">
-        <Info className="mt-0.5 size-4 shrink-0 text-brass sm:mt-0" aria-hidden="true" />
+        <Info className="mt-0.5 size-4 shrink-0 text-purple-700 sm:mt-0" aria-hidden="true" />
         <p>
-          <span className="font-semibold text-brass">Content in progress.</span>{" "}
+          <span className="font-semibold text-purple-700">Content in progress.</span>{" "}
           Items marked &ldquo;Demo&rdquo; are placeholders and items marked &ldquo;Provisional&rdquo;
           await confirmation by RIGIS.
         </p>

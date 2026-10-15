@@ -28,7 +28,7 @@ export function Logo({ inverted = false, className }: { inverted?: boolean; clas
       <span className="flex flex-col leading-none">
         <span
           className={cn(
-            "font-heading text-[1.125rem] font-extrabold tracking-[0.08em]",
+            "font-heading text-[1.125rem] font-medium tracking-[0.08em]",
             inverted ? "text-white" : "text-navy-900",
           )}
         >

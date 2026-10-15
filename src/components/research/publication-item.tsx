@@ -54,10 +54,15 @@ export function PublicationItem({
             );
           })}
         </p>
-        <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.8125rem] text-muted-foreground">
-          <span>{typeLabel[publication.publicationType]}</span>
-          {publication.venue && <span className="italic">{publication.venue}</span>}
-          {publication.isDemo && <DemoTag />}
+        <p className="mt-1 text-[0.8125rem] leading-relaxed text-muted-foreground">
+          {typeLabel[publication.publicationType]}
+          {publication.venue && (
+            <>
+              {" · "}
+              <span className="italic">{publication.venue}</span>
+            </>
+          )}
+          {publication.isDemo && <DemoTag className="ml-2 align-middle" />}
         </p>
       </div>
     </li>

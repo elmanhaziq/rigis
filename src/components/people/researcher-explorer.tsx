@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import type { PublicDataset } from "@/lib/data";
-import { displayName, sortProfiles } from "@/lib/data/selectors";
+import { displayName, publicationsForProfile, sortProfiles } from "@/lib/data/selectors";
 import { ProfileAvatar } from "./profile-avatar";
 import { profileHref } from "./researcher-card";
 import { ResearcherPanelContent } from "./researcher-panel";
@@ -12,7 +12,6 @@ import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@/components/
 import { Button } from "@/components/ui/button";
 import { DESKTOP_QUERY, useMediaQuery } from "@/hooks/use-media-query";
 import { OPEN_RESEARCHER_EVENT, requestAreaSelection } from "@/lib/events";
-import { roleLabels } from "@/config/site";
 
 /**
  * Scene 4 — Meet the researchers. Each portrait is a real link to the
@@ -55,27 +54,25 @@ export function ResearcherExplorer({ data }: { data: PublicDataset }) {
               aria-haspopup="dialog"
               className="group block focus-visible:outline-none"
             >
-              <span className="relative block overflow-hidden border border-border bg-card group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-purple-700">
+              <span className="relative block overflow-hidden bg-card group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-purple-700">
                 <ProfileAvatar
                   name={p.fullName}
                   photoUrl={p.photoUrl}
-                  className="transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  className="transition-transform duration-700 ease-out group-hover:scale-[1.025]"
                 />
-                <span className="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-between bg-purple-700/95 px-3 py-2 text-xs font-semibold text-white transition-transform duration-300 group-hover:translate-y-0 group-focus-visible:translate-y-0">
-                  View profile
-                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
-                </span>
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 bg-purple-700 transition-transform duration-300 group-hover:scale-x-100 group-focus-visible:scale-x-100"
+                />
               </span>
-              <span className="mt-4 block eyebrow">{roleLabels[p.role]}</span>
-              <span className="mt-1.5 block font-heading text-[1.0625rem] leading-snug font-bold text-navy-900 group-hover:underline sm:text-lg">
+              <span className="mt-4 block font-heading text-[1.25rem] leading-snug text-navy-900 group-hover:text-purple-700 sm:text-[1.375rem]">
                 {displayName(p)}
               </span>
-              {p.position && <span className="mt-0.5 block text-sm text-muted-foreground">{p.position}</span>}
-              {p.researchInterests.length > 0 && (
-                <span className="mt-2 hidden text-[0.8125rem] text-muted-foreground sm:line-clamp-2">
-                  {p.researchInterests.join(" · ")}
-                </span>
-              )}
+              {p.position && <span className="mt-1 block text-sm text-muted-foreground">{p.position}</span>}
+              <span className="mt-3 block border-t border-border pt-3 text-[0.8125rem] text-muted-foreground">
+                {publicationsForProfile(data, p.id).length} recent publications
+                <span className="hidden sm:inline"> · open profile</span>
+              </span>
             </Link>
           </li>
         ))}

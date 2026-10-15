@@ -126,12 +126,18 @@ export function AreaExplorer({
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="min-w-0">
-                <span className="block font-heading text-[0.9375rem] leading-snug font-bold whitespace-nowrap lg:text-lg lg:whitespace-normal">
+                <span className="block font-heading text-[0.9375rem] leading-snug font-semibold whitespace-nowrap lg:text-lg lg:whitespace-normal">
                   {a.name}
                 </span>
-                <span className={cn("hidden text-[0.8125rem] lg:block", selected ? "text-muted-foreground" : "text-muted-foreground")}>
-                  {s.researchers.length} {s.researchers.length === 1 ? "researcher" : "researchers"} · {s.projects.length}{" "}
-                  {s.projects.length === 1 ? "project" : "projects"}
+                <span className="hidden text-[0.8125rem] text-muted-foreground lg:block">
+                  {s.researchers.length === 0 && s.projects.length === 0
+                    ? "Not yet linked to researchers or projects"
+                    : [
+                        s.researchers.length > 0 && `${s.researchers.length} ${s.researchers.length === 1 ? "researcher" : "researchers"}`,
+                        s.projects.length > 0 && `${s.projects.length} ${s.projects.length === 1 ? "project" : "projects"}`,
+                      ]
+                        .filter(Boolean)
+                        .join(" · ")}
                 </span>
               </span>
               <ArrowRight
@@ -158,7 +164,7 @@ export function AreaExplorer({
               <span className="font-heading text-sm font-semibold text-purple-700 tabular-nums">{String(index + 1).padStart(2, "0")}</span>
               <StatusTag status={area.status} />
             </div>
-            <H className="mt-3 font-heading text-2xl leading-tight font-bold sm:text-[1.875rem]">{area.name}</H>
+            <H className="mt-3 font-heading text-2xl leading-tight font-semibold sm:text-[1.875rem]">{area.name}</H>
             {area.description && <p className="mt-3 text-[1.0625rem] leading-relaxed text-muted-foreground">{area.description}</p>}
 
             <div className="mt-8 border-t border-border pt-6">
@@ -168,7 +174,7 @@ export function AreaExplorer({
                   No researcher has listed this area among their interests yet, and no approved project is linked to it.
                 </p>
               ) : (
-                <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                <ul className="mt-3 grid border-t border-border sm:grid-cols-2 sm:gap-x-8">
                   {researchers.map(({ profile, basis, matchedInterests }) => (
                     <li key={profile.id}>
                       <Link
@@ -177,7 +183,7 @@ export function AreaExplorer({
                           if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
                           if (requestResearcherPanel(profile.slug)) e.preventDefault();
                         }}
-                        className="group flex items-center gap-3 rounded-sm border border-border p-2.5 transition-colors hover:border-purple-400"
+                        className="group flex items-center gap-3 border-b border-border py-3 transition-colors"
                       >
                         <ProfileAvatar
                           name={profile.fullName}

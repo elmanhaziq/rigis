@@ -12,7 +12,6 @@ import { AreaExplorer } from "@/components/research/area-explorer";
 import { ResearcherExplorer } from "@/components/people/researcher-explorer";
 
 function SceneHeader({
-  number,
   eyebrow,
   title,
   description,
@@ -20,7 +19,6 @@ function SceneHeader({
   action,
   inverted = false,
 }: {
-  number: string;
   eyebrow: string;
   title: string;
   description: string;
@@ -32,10 +30,9 @@ function SceneHeader({
     <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
       <div className="lg:col-span-7">
         <p className={`eyebrow flex items-center gap-3 ${inverted ? "text-purple-200" : ""}`}>
-          <span className="rule-accent" aria-hidden="true" />
-          {number} · {eyebrow}
+          {eyebrow}
         </p>
-        <h2 id={id} className={`mt-4 font-heading text-[2rem] leading-[1.1] font-bold sm:text-[2.75rem] ${inverted ? "text-white" : ""}`}>
+        <h2 id={id} className={`mt-4 font-heading text-[2.25rem] leading-[1.05] font-normal sm:text-[3rem] ${inverted ? "text-white" : ""}`}>
           {title}
         </h2>
       </div>
@@ -66,10 +63,9 @@ export default async function HomePage() {
         <div className="container-page py-20 lg:py-28">
           <SceneHeader
             id="research-title"
-            number="03"
-            eyebrow="Explore our research"
-            title="Six areas, one direction"
-            description="Choose an area to see what it covers, who works in it and the projects behind it. Every connection shows where it comes from."
+            eyebrow="Research"
+            title="Research areas"
+            description="Choose an area to see what it covers, who is connected to it and why, and the projects behind it."
           />
           <div className="mt-12 lg:mt-16">
             <AreaExplorer data={data} />
@@ -81,10 +77,9 @@ export default async function HomePage() {
         <div className="container-page py-20 lg:py-28">
           <SceneHeader
             id="people-title"
-            number="04"
-            eyebrow="Meet the researchers"
-            title="The people behind the research"
-            description="Select a researcher to read their story, interests, collaborators and recent publications, then move straight on to the next."
+            eyebrow="People"
+            title="The researchers"
+            description="Open a profile to read about each researcher, their interests, the colleagues they write with and their recent papers."
             action={
               <Button asChild variant="outline" className="self-start">
                 <Link href="/people/">
@@ -105,8 +100,7 @@ export default async function HomePage() {
           <SceneHeader
             id="network-title"
             inverted
-            number="05"
-            eyebrow="Research network"
+            eyebrow="Collaboration"
             title="Who works with whom"
             description={`${shared} recent papers were written by two or more RIGIS researchers. The map below is drawn directly from those author lists.`}
             action={

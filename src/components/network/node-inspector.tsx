@@ -76,7 +76,7 @@ export function NodeInspector({
             {kindLabel[node.kind]}
             <StatusTag status={node.status} />
           </p>
-          <h2 id={titleId} className="mt-1.5 font-heading text-xl leading-snug font-bold text-navy-900">
+          <h2 id={titleId} className="mt-1.5 font-heading text-xl leading-snug font-semibold text-navy-900">
             {node.label}
           </h2>
           {node.sublabel && <p className="mt-0.5 text-sm text-muted-foreground">{node.sublabel}</p>}

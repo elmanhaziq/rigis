@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Building2, Handshake, Mail, Phone, Search } from "lucide-react";
+import { Building2, Mail, Phone } from "lucide-react";
 import { getPublicDataset } from "@/lib/data";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { PageMasthead } from "@/components/layout/page-masthead";
 import { ContactForm } from "@/components/forms/contact-form";
 
 export const metadata: Metadata = {
@@ -16,17 +16,11 @@ export default async function ContactPage() {
 
   return (
     <>
-      <header className="border-b border-border">
-        <div className="container-page py-16 sm:py-20">
-          <SectionHeading
-            as="h1"
-            eyebrow="Contact"
-            title="Get in touch with RIGIS"
-            description="For research collaboration, research enquiries or postgraduate opportunities, send us a message and the right member of the group will respond."
-            align="split"
-          />
-        </div>
-      </header>
+      <PageMasthead
+        section="Contact"
+        title="Write to RIGIS"
+        dek="For research collaboration, academic partnerships, student opportunities or questions about our work. Your message reaches the group, not an individual inbox."
+      />
 
       <div className="container-page grid gap-14 py-14 lg:grid-cols-12 lg:py-20">
         <aside className="space-y-10 lg:col-span-4" aria-label="Contact information">
@@ -60,36 +54,25 @@ export default async function ContactPage() {
           </section>
 
           <section aria-labelledby="enquiry-types" className="border-t border-border pt-8">
-            <h2 id="enquiry-types" className="eyebrow">How we can help</h2>
-            <ul className="mt-5 space-y-6">
-              <li className="flex gap-4">
-                <Handshake className="mt-0.5 size-5 shrink-0 text-purple-700" aria-hidden="true" />
-                <div>
-                  <h3 className="font-heading font-bold">Collaboration enquiries</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                    Joint research, grant partnerships, visiting researchers and industry projects.
-                  </p>
-                </div>
-              </li>
-              <li className="flex gap-4">
-                <Search className="mt-0.5 size-5 shrink-0 text-purple-700" aria-hidden="true" />
-                <div>
-                  <h3 className="font-heading font-bold">Research enquiries</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                    Questions about our projects, publications, datasets or postgraduate supervision.
-                  </p>
-                </div>
-              </li>
-            </ul>
+            <h2 id="enquiry-types" className="eyebrow">What to write about</h2>
+            <dl className="mt-5 space-y-5 text-[0.9375rem]">
+              <div>
+                <dt className="font-heading text-lg text-navy-900">Collaboration</dt>
+                <dd className="mt-1 leading-relaxed text-muted-foreground">Joint research, grant partnerships, visiting researchers and industry projects.</dd>
+              </div>
+              <div>
+                <dt className="font-heading text-lg text-navy-900">Research enquiries</dt>
+                <dd className="mt-1 leading-relaxed text-muted-foreground">Questions about publications, methods, datasets or postgraduate supervision.</dd>
+              </div>
+            </dl>
             <p className="mt-8 text-[0.8125rem] leading-relaxed text-muted-foreground">
-              Individual members&rsquo; email addresses are only shown where they have chosen to make
-              them public on their profile.
+              Individual members&rsquo; email addresses are only shown where they have chosen to make them public on their profile.
             </p>
           </section>
         </aside>
 
-        <section aria-labelledby="form-title" className="border border-border bg-card p-6 sm:p-10 lg:col-span-8">
-          <h2 id="form-title" className="font-heading text-2xl font-bold">Send a message</h2>
+        <section aria-labelledby="form-title" className="border-t-2 border-purple-700 bg-card p-6 sm:p-10 lg:col-span-8">
+          <h2 id="form-title" className="font-heading text-[1.75rem] font-normal">Send a message</h2>
           <div className="mt-6">
             <ContactForm />
           </div>

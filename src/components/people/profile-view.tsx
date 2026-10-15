@@ -47,77 +47,91 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
   return (
     <article>
       <header className="border-b border-border">
-        <div className="container-page py-10 sm:py-14">
+        <div className="container-page pt-8 pb-12 sm:pt-10 lg:pb-16">
           <Link
             href="/people/"
-            className="inline-flex min-h-10 items-center gap-2 text-sm font-medium text-muted-foreground hover:text-navy-900"
+            className="inline-flex min-h-10 items-center gap-2 text-sm font-medium text-muted-foreground hover:text-purple-700"
           >
             <ArrowLeft className="size-4" aria-hidden="true" />
-            All people
+            All researchers
           </Link>
-          <div className="mt-8 grid gap-10 md:grid-cols-12 md:items-end">
-            <div className="max-w-[260px] md:col-span-3 md:max-w-none">
-              <ProfileAvatar
-                name={profile.fullName}
-                photoUrl={profile.photoUrl}
-                className="border border-border"
-                textClassName="text-6xl"
-              />
+          <div className="mt-6 grid gap-8 sm:grid-cols-12 sm:gap-10 lg:mt-10">
+            <div className="max-w-[320px] sm:col-span-5 sm:max-w-none lg:col-span-4">
+              <ProfileAvatar name={profile.fullName} photoUrl={profile.photoUrl} textClassName="text-6xl" />
             </div>
-            <div className="md:col-span-9 md:pl-4">
+            <div className="flex flex-col sm:col-span-7 lg:col-span-8 lg:pl-6">
               <p className="eyebrow flex flex-wrap items-center gap-3">
-                <span className="rule-accent" aria-hidden="true" />
-                {roleLabels[profile.role]}
+                {profile.position ?? roleLabels[profile.role]}
                 {profile.isDemo && <DemoTag />}
               </p>
-              <h1 className="mt-4 font-heading text-[2.25rem] leading-[1.1] font-extrabold sm:text-5xl">
-                {displayName(profile)}
+              <h1 className="mt-4 font-heading text-[2.625rem] leading-[1.02] font-normal sm:text-[3.5rem] lg:text-[4.25rem]">
+                {profile.professionalTitle && (
+                  <span className="block text-[0.5em] leading-tight text-muted-foreground">{profile.professionalTitle}</span>
+                )}
+                {profile.fullName}
               </h1>
-              {profile.position && <p className="mt-3 text-xl text-muted-foreground">{profile.position}</p>}
               {profile.researchInterests.length > 0 && (
-                <ul className="mt-6 flex flex-wrap gap-2" aria-label="Research interests">
-                  {profile.researchInterests.map((i) => {
+                <p className="mt-5 font-heading text-[1.1875rem] leading-relaxed text-navy-900 italic sm:text-[1.3125rem]">
+                  <span className="sr-only">Research interests: </span>
+                  {profile.researchInterests.map((i, idx) => {
                     const area = areasForInterest(data.areas, i)[0];
                     return (
-                      <li key={i}>
+                      <span key={i}>
+                        {idx > 0 && <span className="text-purple-400 not-italic" aria-hidden="true"> · </span>}
                         {area ? (
                           <Link
                             href={`/research/?area=${area.slug}`}
                             title={`Explore ${area.name}`}
-                            className="inline-flex min-h-9 items-center rounded-sm border border-purple-400/70 bg-card px-3 text-sm text-navy-900 transition-colors hover:border-purple-700 hover:bg-accent"
+                            className="decoration-purple-400 underline-offset-4 hover:text-purple-700 hover:underline"
                           >
                             {i}
                           </Link>
                         ) : (
-                          <span className="inline-flex min-h-9 items-center rounded-sm border border-border bg-card px-3 text-sm text-navy-900">{i}</span>
+                          i
                         )}
-                      </li>
+                      </span>
                     );
                   })}
-                </ul>
+                </p>
               )}
+              <dl className="mt-auto grid grid-cols-3 gap-4 border-t border-border pt-6 max-sm:mt-8 sm:pt-8">
+                {[
+                  { value: publications.length, label: "Recent publications" },
+                  { value: collaborators.length, label: "Co-authors in RIGIS" },
+                  { value: projects.length, label: "Approved projects" },
+                ].map((f) => (
+                  <div key={f.label} className="flex flex-col-reverse">
+                    <dt className="mt-1 text-[0.8125rem] text-muted-foreground">{f.label}</dt>
+                    <dd className="font-heading text-[2rem] leading-none text-navy-900 tabular-nums">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
         </div>
       </header>
 
       <div className="container-page grid gap-14 py-14 lg:grid-cols-12 lg:py-20">
-        <div className="space-y-16 lg:col-span-8">
+        <div className="flex flex-col gap-16 lg:col-span-8">
           <section aria-labelledby="bio-title">
-            <h2 id="bio-title" className="font-heading text-2xl font-bold">Biography</h2>
-            <div className="prose-rigis mt-5">
-              {profile.biography ? (
-                profile.biography.split(/\n{2,}/).map((para, i) => <p key={i}>{para}</p>)
-              ) : (
-                <p className="text-muted-foreground">No biography has been added yet.</p>
-              )}
-            </div>
+            <h2 id="bio-title" className="eyebrow">Biography</h2>
+            {profile.biography ? (
+              profile.biography.split(/\n{2,}/).map((para, i) =>
+                i === 0 ? (
+                  <p key={i} className="dek mt-4 text-navy-900">{para}</p>
+                ) : (
+                  <p key={i} className="prose-rigis mt-5">{para}</p>
+                ),
+              )
+            ) : (
+              <p className="mt-4 text-muted-foreground">No biography has been added yet.</p>
+            )}
           </section>
 
-          <section aria-labelledby="projects-title">
-            <h2 id="projects-title" className="font-heading text-2xl font-bold">Research projects</h2>
+          <section aria-labelledby="projects-title" className={projects.length === 0 ? "order-last" : undefined}>
+            <h2 id="projects-title" className="font-heading text-[1.75rem] font-normal">Research projects</h2>
             {projects.length === 0 ? (
-              <p className="mt-5 text-muted-foreground">No published projects yet.</p>
+              <p className="mt-3 text-muted-foreground">No approved projects are listed yet.</p>
             ) : (
               <ul className="mt-6 grid gap-6 md:grid-cols-2">
                 {projects.map((p) => (
@@ -134,7 +148,7 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
           </section>
 
           <section aria-labelledby="pubs-title">
-            <h2 id="pubs-title" className="font-heading text-2xl font-bold">Publications</h2>
+            <h2 id="pubs-title" className="font-heading text-[1.75rem] font-normal">Publications</h2>
             {publications.length === 0 ? (
               <p className="mt-5 text-muted-foreground">No publications listed yet.</p>
             ) : (

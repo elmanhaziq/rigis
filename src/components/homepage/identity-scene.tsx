@@ -42,10 +42,9 @@ export function IdentityScene({ site }: { site: SiteContent }) {
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-28">
             <p className="eyebrow flex items-center gap-3">
-              <span className="rule-accent" aria-hidden="true" />
-              02 · Understanding RIGIS
+              About the group
             </p>
-            <h2 id="identity-title" className="mt-4 font-heading text-[2rem] leading-[1.1] font-bold sm:text-[2.75rem]">
+            <h2 id="identity-title" className="mt-4 font-heading text-[2.25rem] leading-[1.05] font-normal sm:text-[3rem]">
               Who RIGIS is, and what guides its work
             </h2>
 
@@ -94,7 +93,7 @@ export function IdentityScene({ site }: { site: SiteContent }) {
               </h3>
               <p
                 className={cn(
-                  "mt-5 font-heading text-[1.375rem] leading-[1.5] font-medium transition-colors duration-500 sm:text-[1.75rem] sm:leading-[1.45]",
+                  "mt-5 font-heading text-[1.5rem] leading-[1.45] font-normal transition-colors duration-500 sm:text-[2rem] sm:leading-[1.35]",
                   active === i ? "text-navy-900" : "text-navy-900 lg:text-muted-foreground",
                 )}
               >

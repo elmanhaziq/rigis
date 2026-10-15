@@ -141,7 +141,7 @@ export function NetworkExperience({ data }: { data: PublicDataset }) {
   ) : (
     <div className="text-[0.9375rem] text-muted-foreground">
       <MousePointerClick className="size-5 text-purple-700" aria-hidden="true" />
-      <p className="mt-3 font-heading text-lg font-bold text-navy-900">Select anything to inspect it</p>
+      <p className="mt-3 font-heading text-lg font-semibold text-navy-900">Select anything to inspect it</p>
       <p className="mt-2 leading-relaxed">
         Researchers, papers and research areas show what they are connected to and why. Each connection is a step to the
         next item.
@@ -366,7 +366,7 @@ function NetworkList({
         const Icon = kindIcon[kind];
         return (
           <section key={kind} aria-labelledby={`list-${kind}`}>
-            <h2 id={`list-${kind}`} className="flex items-center gap-3 font-heading text-lg font-bold">
+            <h2 id={`list-${kind}`} className="flex items-center gap-3 font-heading text-lg font-semibold">
               <Icon className="size-4 text-purple-700" aria-hidden="true" />
               {kindPlural[kind]}
               <span className="h-px flex-1 bg-border" aria-hidden="true" />

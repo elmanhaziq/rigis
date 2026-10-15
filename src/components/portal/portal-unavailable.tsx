@@ -18,7 +18,7 @@ export function PortalUnavailable({ title }: { title: string }) {
           <span className="flex size-11 items-center justify-center rounded-full bg-muted text-purple-700">
             <LockKeyhole className="size-5" aria-hidden="true" />
           </span>
-          <h1 className="mt-6 font-heading text-2xl font-bold">{title}</h1>
+          <h1 className="mt-6 font-heading text-2xl font-semibold">{title}</h1>
           <p className="mt-3 leading-relaxed text-muted-foreground">
             The RIGIS member portal is not available yet. Sign-in and membership requests will
             open once the website&rsquo;s secure database and authentication are connected.

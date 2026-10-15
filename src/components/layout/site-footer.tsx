@@ -22,7 +22,7 @@ export function SiteFooter() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="link-underline inline-flex min-h-9 items-center text-[0.9375rem] hover:text-white"
+                  className="link-underline inline-flex min-h-11 items-center text-[0.9375rem] hover:text-white"
                 >
                   {item.label}
                 </Link>
@@ -35,17 +35,17 @@ export function SiteFooter() {
           <h2 className="font-heading text-sm font-semibold tracking-wide text-white">Members</h2>
           <ul className="mt-4 space-y-1">
             <li>
-              <Link href="/portal/login/" className="link-underline inline-flex min-h-9 items-center text-[0.9375rem] hover:text-white">
+              <Link href="/portal/login/" className="link-underline inline-flex min-h-11 items-center text-[0.9375rem] hover:text-white">
                 Sign in to the portal
               </Link>
             </li>
             <li>
-              <Link href="/portal/register/" className="link-underline inline-flex min-h-9 items-center text-[0.9375rem] hover:text-white">
+              <Link href="/portal/register/" className="link-underline inline-flex min-h-11 items-center text-[0.9375rem] hover:text-white">
                 Request membership
               </Link>
             </li>
             <li>
-              <Link href="/contact/" className="link-underline inline-flex min-h-9 items-center text-[0.9375rem] hover:text-white">
+              <Link href="/contact/" className="link-underline inline-flex min-h-11 items-center text-[0.9375rem] hover:text-white">
                 Collaboration enquiries
               </Link>
             </li>

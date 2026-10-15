@@ -6,7 +6,6 @@ import { ArrowUpRight, ExternalLink } from "lucide-react";
 import type { PublicDataset } from "@/lib/data";
 import { displayName } from "@/lib/data/selectors";
 import { memberAuthors, sharedPublications } from "@/lib/data/relationships";
-import { cn } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { palette } from "@/config/palette";
 
@@ -179,7 +178,7 @@ export function CollaborationMap({ data }: { data: PublicDataset }) {
                       clipPath={`url(#cm-clip-${p.id})`}
                     />
                   ) : (
-                    <text x={c.x} y={c.y + 6} textAnchor="middle" className="fill-white font-heading text-[18px] font-bold">
+                    <text x={c.x} y={c.y + 6} textAnchor="middle" className="fill-white font-heading text-[18px] font-semibold">
                       {p.fullName.split(" ").slice(0, 2).map((w) => w[0]).join("")}
                     </text>
                   )}
@@ -187,7 +186,7 @@ export function CollaborationMap({ data }: { data: PublicDataset }) {
                     x={c.x}
                     y={below ? c.y + 62 : c.y - 52}
                     textAnchor="middle"
-                    className="fill-white font-heading text-[15px] font-bold"
+                    className="fill-white font-heading text-[15px] font-semibold"
                   >
                     {compact ? p.fullName.split(" ")[0] : p.fullName}
                   </text>
@@ -196,6 +195,10 @@ export function CollaborationMap({ data }: { data: PublicDataset }) {
             })}
           </svg>
         </div>
+        <p className="mt-4 border-t border-white/12 pt-4 text-[0.9375rem] leading-relaxed text-white/70">
+          <span className="mr-2 font-heading text-base text-purple-200 italic">Fig. 2</span>
+          Papers co-written by RIGIS researchers, placed between their authors. Drawn from published author lists.
+        </p>
       </div>
 
       <aside aria-live="polite" className="min-w-0 lg:col-span-4">
@@ -203,7 +206,7 @@ export function CollaborationMap({ data }: { data: PublicDataset }) {
           {selPaper ? (
             <>
               <p className="eyebrow text-purple-200">Paper written together · {selPaper.pub.year}</p>
-              <p className="mt-2 font-heading text-lg leading-snug font-bold text-white">{selPaper.pub.title}</p>
+              <p className="mt-2 font-heading text-lg leading-snug font-semibold text-white">{selPaper.pub.title}</p>
               {selPaper.pub.venue && <p className="mt-2 text-sm text-white/70 italic">{selPaper.pub.venue}</p>}
               <p className="mt-4 text-sm font-semibold text-white">RIGIS authors</p>
               <ul className="mt-2 space-y-1.5">
@@ -237,7 +240,7 @@ export function CollaborationMap({ data }: { data: PublicDataset }) {
           ) : selPerson ? (
             <>
               <p className="eyebrow text-purple-200">Researcher</p>
-              <p className="mt-2 font-heading text-lg font-bold text-white">{displayName(selPerson)}</p>
+              <p className="mt-2 font-heading text-lg font-semibold text-white">{displayName(selPerson)}</p>
               <p className="mt-1 text-sm text-white/70">
                 {model.papers.filter((p) => p.authors.includes(selPerson.id)).length} papers written with other RIGIS members
               </p>
@@ -265,13 +268,9 @@ export function CollaborationMap({ data }: { data: PublicDataset }) {
             </>
           ) : (
             <>
-              <p className="eyebrow text-purple-200">How to read this map</p>
-              <p className="mt-3 text-[0.9375rem] leading-relaxed text-white/85">
-                Each <span className="font-semibold text-brass">gold point</span> is a paper written by two or more RIGIS
-                researchers, placed between its authors. Points near the centre involve more of the group.
-              </p>
-              <p className={cn("mt-3 text-[0.9375rem] text-white/70")}>
-                Select a researcher or a paper to see the connection.
+              <p className="font-heading text-[1.375rem] leading-snug text-white">Select a researcher or a paper</p>
+              <p className="mt-3 text-[0.9375rem] leading-relaxed text-white/75">
+                The map highlights the connection and lists the papers or co-authors involved, with links to each source.
               </p>
             </>
           )}

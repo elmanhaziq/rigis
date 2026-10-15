@@ -141,12 +141,12 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
             const right = pos.x >= C;
             return (
               <g key={area.id} style={{ opacity: on ? 1 : 0.3, transition: "opacity 250ms" }}>
-                <rect x={pos.x - 6} y={pos.y - 6} width="12" height="12" transform={`rotate(45 ${pos.x} ${pos.y})`} fill={area.accent} />
+                <rect x={pos.x - 7} y={pos.y - 7} width="14" height="14" transform={`rotate(45 ${pos.x} ${pos.y})`} fill={area.accent} />
                 <text
                   x={pos.x + (Math.abs(pos.x - C) < 10 ? 0 : right ? 14 : -14)}
                   y={pos.y + (Math.abs(pos.x - C) < 10 ? (pos.y < C ? -16 : 26) : 4)}
                   textAnchor={Math.abs(pos.x - C) < 10 ? "middle" : right ? "start" : "end"}
-                  className="fill-white/75 font-sans text-[13px] font-medium"
+                  className="hidden fill-white/75 font-sans text-[13px] font-medium sm:inline"
                 >
                   {area.shortName}
                 </text>
@@ -204,8 +204,10 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
                     setActive(profile.id);
                   }
                 }}
-                className="cursor-pointer outline-none [&:focus-visible>circle:first-child]:stroke-purple-200"
+                className="cursor-pointer outline-none [&:focus-visible>circle:nth-child(2)]:stroke-purple-200"
               >
+                {/* Invisible hit area: keeps the target at least 44px wide on small phones. */}
+                <circle cx={pos.x} cy={pos.y} r="58" fill="transparent" />
                 <circle cx={pos.x} cy={pos.y} r="34" fill={palette.navy900} stroke={on ? palette.purple200 : palette.white} strokeOpacity={on ? 1 : 0.85} strokeWidth={on ? 3 : 1.5} style={{ transition: "stroke 200ms" }} />
                 {profile.photoUrl ? (
                   <image
@@ -220,7 +222,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
                     style={{ transition: "opacity 250ms" }}
                   />
                 ) : (
-                  <text x={pos.x} y={pos.y + 5} textAnchor="middle" className="fill-white font-heading text-[15px] font-bold">
+                  <text x={pos.x} y={pos.y + 5} textAnchor="middle" className="fill-white font-heading text-[15px] font-semibold">
                     {profile.fullName.split(" ").slice(0, 2).map((w) => w[0]).join("")}
                   </text>
                 )}
@@ -230,13 +232,13 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
         </g>
       </svg>
 
-      <figcaption aria-live="polite" className="mt-2 min-h-[4.5rem] border-t border-white/15 pt-4 text-[0.9375rem] text-white/75">
+      <figcaption aria-live="polite" className="mt-3 min-h-[4.5rem] border-t border-white/15 pt-4 text-[0.9375rem] leading-relaxed text-white/75">
+        <span className="mr-2 font-heading text-base text-purple-200 italic">Fig. 1</span>
         {activeProfile && activeStats ? (
           <>
-            <span className="block font-heading text-base font-bold text-white">{displayName(activeProfile)}</span>
-            {activeStats.pubs} recent publications listed · co-authored with {activeStats.collaborators} RIGIS{" "}
-            {activeStats.collaborators === 1 ? "member" : "members"}
-            {activeStats.areas > 0 && ` · interests in ${activeStats.areas} research ${activeStats.areas === 1 ? "area" : "areas"}`}
+            <span className="font-heading text-base text-white">{displayName(activeProfile)}</span>
+            {" "}— {activeStats.pubs} recent publications, written with {activeStats.collaborators} RIGIS{" "}
+            {activeStats.collaborators === 1 ? "colleague" : "colleagues"}.
             <Link
               href={`/people/${activeProfile.slug}/`}
               className="mt-1 flex min-h-8 items-center gap-1 text-sm font-semibold text-purple-200 hover:underline"
@@ -246,9 +248,9 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
           </>
         ) : (
           <>
-            <span className="block font-heading text-base font-bold text-white">RIGIS at a glance</span>
-            {data.profiles.length} researchers, {model.pubs.length} recent publications and {data.areas.length} research areas.{" "}
-            <span className={cn("text-white/60")}>Gold points are papers written together. Select a researcher to see their part.</span>
+            The group at a glance. Portraits are researchers; each point is a recent paper, in{" "}
+            <span className="text-brass">gold</span> where two or more members wrote it together; diamonds are research areas.{" "}
+            <span className={cn("text-white/60")}>Select a researcher to see their part.</span>
           </>
         )}
       </figcaption>

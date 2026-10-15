@@ -1,14 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Manrope } from "next/font/google";
+import { Inter, Newsreader } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
-const manrope = Manrope({
-  variable: "--font-manrope",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
   display: "swap",
 });
 
@@ -38,7 +39,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en-GB" className={`${inter.variable} ${manrope.variable} h-full antialiased`}>
+    <html lang="en-GB" className={`${inter.variable} ${newsreader.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
       </body>

@@ -14,7 +14,7 @@ import { formatBytes, yearRange } from "@/lib/format";
 function Block({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
   return (
     <section aria-labelledby={id} className="grid gap-4 border-t border-border pt-8 md:grid-cols-[12rem_1fr] md:gap-10">
-      <h2 id={id} className="font-heading text-lg font-bold">{title}</h2>
+      <h2 id={id} className="font-heading text-lg font-semibold">{title}</h2>
       <div>{children}</div>
     </section>
   );
@@ -49,7 +49,7 @@ export function ProjectView({ project, data }: { project: ResearchProject; data:
                 <ProjectStatusBadge status={project.status} />
                 {project.isDemo && <DemoTag />}
               </div>
-              <h1 className="mt-5 font-heading text-[2.125rem] leading-[1.1] font-extrabold sm:text-5xl">{project.title}</h1>
+              <h1 className="mt-5 font-heading text-[2.125rem] leading-[1.1] font-medium sm:text-5xl">{project.title}</h1>
               <p className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">{project.abstract}</p>
             </div>
             <dl className="grid content-end gap-5 text-[0.9375rem] sm:grid-cols-2 lg:col-span-4 lg:grid-cols-1 lg:border-l lg:border-border lg:pl-8">

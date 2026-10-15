@@ -72,7 +72,7 @@ export function ContactForm() {
     return (
       <div role="status" className="border border-success/30 bg-success-bg p-8">
         <CheckCircle2 className="size-6 text-success" aria-hidden="true" />
-        <h3 className="mt-4 font-heading text-xl font-bold">Thank you — your message has been sent</h3>
+        <h3 className="mt-4 font-heading text-xl font-semibold">Thank you — your message has been sent</h3>
         <p className="mt-2 text-muted-foreground">A member of the group will reply to the email address you provided.</p>
         <Button variant="outline" className="mt-6" onClick={() => { startedAt.current = 0; setStatus({ kind: "idle" }); }}>
           Send another message

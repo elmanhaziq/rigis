@@ -54,7 +54,7 @@ export function ProjectCard({
         </div>
         <H
           className={cn(
-            "mt-4 font-heading font-bold text-navy-900",
+            "mt-4 font-heading font-semibold text-navy-900",
             feature ? "text-2xl leading-tight" : "text-xl leading-snug",
           )}
         >

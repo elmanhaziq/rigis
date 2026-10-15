@@ -54,7 +54,7 @@ export function ResearcherPanelContent({
             {roleLabels[profile.role]}
             <StatusTag status={profile.isDemo ? "demo" : "verified"} />
           </p>
-          <h2 id={titleId} className="mt-2 font-heading text-2xl leading-tight font-extrabold sm:text-[1.75rem]">
+          <h2 id={titleId} className="mt-2 font-heading text-2xl leading-tight font-medium sm:text-[1.75rem]">
             {displayName(profile)}
           </h2>
           {profile.position && <p className="mt-1 text-muted-foreground">{profile.position}</p>}

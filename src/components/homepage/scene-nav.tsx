@@ -91,7 +91,7 @@ export function SceneNav() {
         </SheetTrigger>
         <SheetContent side="bottom" className="rounded-t-xl bg-paper px-5 pt-3 pb-8">
           <div className="mx-auto h-1 w-10 rounded-full bg-input" aria-hidden="true" />
-          <SheetTitle className="mt-3 font-heading text-lg font-bold text-navy-900">The RIGIS story</SheetTitle>
+          <SheetTitle className="mt-3 font-heading text-lg font-semibold text-navy-900">The RIGIS story</SheetTitle>
           <SheetDescription className="sr-only">Jump to a chapter</SheetDescription>
           <ol className="divide-y divide-border border-y border-border">
             {scenes.map((s, i) => (

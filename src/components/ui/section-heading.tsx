@@ -37,14 +37,13 @@ export function SectionHeading({
       <div className={cn(align === "split" && "lg:col-span-7")}>
         {eyebrow && (
           <p className={cn("eyebrow flex items-center gap-3", inverted && "text-white/70")}>
-            <span className="rule-accent" aria-hidden="true" />
             {eyebrow}
           </p>
         )}
         <Tag
           id={id}
           className={cn(
-            "mt-4 font-heading font-bold",
+            "mt-4 font-heading font-semibold",
             Tag === "h1"
               ? "text-[2.25rem] leading-[1.1] sm:text-5xl lg:text-[3.5rem]"
               : "text-[1.875rem] leading-[1.15] sm:text-[2.5rem]",
