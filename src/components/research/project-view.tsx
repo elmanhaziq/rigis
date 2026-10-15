@@ -142,6 +142,7 @@ export function ProjectView({ project, data }: { project: ResearchProject; data:
         </div>
 
         <aside className="space-y-10 lg:col-span-4" aria-label="Project team and documents">
+          {(pi || collaborators.length > 0) && (
           <section aria-labelledby="team-title">
             <h2 id="team-title" className="eyebrow">Research team</h2>
             <ul className="mt-4 divide-y divide-border border-y border-border">
@@ -167,6 +168,7 @@ export function ProjectView({ project, data }: { project: ResearchProject; data:
               )}
             </ul>
           </section>
+          )}
 
           {project.documents.length > 0 && (
             <section aria-labelledby="docs-title">

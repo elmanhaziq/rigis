@@ -272,12 +272,24 @@ export default async function HomePage() {
             </Button>
           </div>
           <div className="lg:col-span-6 lg:col-start-7">
+            {data.projects.length === 0 ? (
+              <div className="flex aspect-square w-full max-w-[520px] flex-col items-center justify-center border border-dashed border-white/25 p-8 text-center lg:mx-auto">
+                <FlaskConical className="size-6 text-brass" aria-hidden="true" />
+                <p className="mt-4 font-heading text-lg font-bold text-white">The network is being built</p>
+                <p className="mt-2 max-w-xs text-sm text-white/70">
+                  Connections appear here once RIGIS research projects are published with their teams.
+                </p>
+              </div>
+            ) : (
+            <>
             <NetworkFigure data={data} className="mx-auto w-full max-w-[520px]" />
             <ul className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[0.8125rem] text-white/70" aria-label="Legend">
               <li className="flex items-center gap-2"><span className="size-2.5 rounded-full bg-white" aria-hidden="true" />Researcher</li>
               <li className="flex items-center gap-2"><span className="size-3 rounded-full border-[1.5px] border-white bg-navy-800" aria-hidden="true" />Project</li>
               <li className="flex items-center gap-2"><span className="size-2.5 rotate-45 bg-brass" aria-hidden="true" />Research area</li>
             </ul>
+            </>
+            )}
           </div>
         </div>
       </section>

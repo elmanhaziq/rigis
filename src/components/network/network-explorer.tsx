@@ -211,7 +211,13 @@ function GraphCanvas({ data }: { data: PublicDataset }) {
     <div>
       <div className="grid gap-4 md:grid-cols-12 md:items-end">
         <div className="md:col-span-5">
+          {researcherOptions.length === 0 ? (
+            <p className="text-sm text-muted-foreground">
+              Researchers appear here once they are linked to a published project.
+            </p>
+          ) : (
           <SearchField id="network-search" label="Find a researcher" value={query} onChange={onSearch} placeholder="Type a name" list="network-researchers" />
+          )}
           <datalist id="network-researchers">
             {researcherOptions.map((n) => <option key={n.id} value={n.label} />)}
           </datalist>

@@ -13,7 +13,18 @@ export function projectsForProfile(data: PublicDataset, profileId: string): Rese
 export function publicationsForProfile(data: PublicDataset, profileId: string) {
   return data.publications
     .filter((pub) => pub.authors.some((a) => a.profileId === profileId))
-    .sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+    .sort(byPublicationDate);
+}
+
+const pubDateKey = (p: { publishedOn: string | null; year: number | null }) =>
+  p.publishedOn ?? (p.year ? `${p.year}-00-00` : "");
+
+/** Newest first; entries with only a year sort after dated ones of that year. */
+export function byPublicationDate(
+  a: { publishedOn: string | null; year: number | null },
+  b: { publishedOn: string | null; year: number | null },
+) {
+  return pubDateKey(b).localeCompare(pubDateKey(a));
 }
 
 export function profileMap(data: PublicDataset): Map<string, PublicProfile> {

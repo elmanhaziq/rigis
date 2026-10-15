@@ -19,15 +19,13 @@ import type {
 import {
   demoAnnouncements,
   demoAreas,
-  demoProfiles,
-  demoProjects,
-  demoPublications,
   demoSiteContent,
 } from "./demo";
 import { memberProfiles, memberPublications } from "./members";
+import { projects } from "./projects";
 
-const profiles = [...memberProfiles, ...demoProfiles];
-const publications = [...memberPublications, ...demoPublications];
+const profiles = memberProfiles;
+const publications = memberPublications;
 
 export interface PublicDataset {
   profiles: PublicProfile[];
@@ -41,7 +39,7 @@ export interface PublicDataset {
 export async function getPublicDataset(): Promise<PublicDataset> {
   return {
     profiles,
-    projects: demoProjects,
+    projects,
     areas: demoAreas,
     publications,
     announcements: [...demoAnnouncements].sort((a, b) =>
@@ -56,7 +54,15 @@ export async function getProfileSlugs(): Promise<string[]> {
 }
 
 export async function getProjectSlugs(): Promise<string[]> {
-  return demoProjects.map((p) => p.slug);
+  return projects.map((p) => p.slug);
 }
 
 export const isDemoMode = true;
+
+/**
+ * Placeholder segment always generated for /people/[slug] and
+ * /research/[slug]. Static export requires at least one page per dynamic
+ * route, and Phase 2 rewrites unknown slugs to this page so records approved
+ * after the last build can load client-side.
+ */
+export const FALLBACK_SLUG = "_";

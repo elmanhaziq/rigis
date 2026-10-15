@@ -106,6 +106,8 @@ export interface Publication {
   title: string;
   venue: string | null;
   year: number | null;
+  /** Full publication date (ISO), when known; used for ordering. */
+  publishedOn: string | null;
   publicationType: "journal" | "conference" | "book-chapter" | "report" | "other";
   doi: string | null;
   url: string | null;

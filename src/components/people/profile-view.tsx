@@ -12,7 +12,7 @@ import {
 } from "@/lib/data/selectors";
 import { ProfileAvatar } from "./profile-avatar";
 import { ProjectCard } from "@/components/research/project-card";
-import { PublicationItem } from "@/components/research/publication-item";
+import { PublicationList } from "@/components/research/publication-list";
 import { DemoTag } from "@/components/layout/demo-banner";
 import { roleLabels } from "@/config/site";
 
@@ -124,11 +124,23 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
             {publications.length === 0 ? (
               <p className="mt-5 text-muted-foreground">No publications listed yet.</p>
             ) : (
-              <ul className="mt-4 border-b border-border">
-                {publications.map((pub) => (
-                  <PublicationItem key={pub.id} publication={pub} profiles={people} />
-                ))}
-              </ul>
+              <>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {publications.length} {publications.length === 1 ? "publication" : "publications"} listed, most recent first.
+                  {profile.googleScholar && (
+                    <>
+                      {" "}
+                      <a href={profile.googleScholar} target="_blank" rel="noopener noreferrer" className="font-medium text-navy-800 hover:underline">
+                        Full record on Google Scholar
+                        <span className="sr-only"> (opens in a new tab)</span>
+                      </a>
+                    </>
+                  )}
+                </p>
+                <div className="mt-4">
+                  <PublicationList publications={publications} profiles={data.profiles} />
+                </div>
+              </>
             )}
           </section>
         </div>
