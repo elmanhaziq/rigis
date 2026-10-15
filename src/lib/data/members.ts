@@ -75,7 +75,7 @@ export const memberProfiles: PublicProfile[] = [
     id: AZLIZA,
     slug: "azliza-mohd-ali",
     fullName: "Azliza Mohd Ali",
-    professionalTitle: null,
+    professionalTitle: "Dr.",
     position: null,
     role: "LECTURER",
     biography:
