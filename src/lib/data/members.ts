@@ -82,10 +82,10 @@ export const memberProfiles: PublicProfile[] = [
     photoUrl: "/images/people/azliza-mohd-ali.webp",
     fullName: "Azliza Mohd Ali",
     professionalTitle: "Dr.",
-    position: null,
+    position: "Senior Lecturer",
     role: "LECTURER",
     biography:
-      "Azliza Mohd Ali is a member of academic staff at Universiti Teknologi MARA. Her research interests are intelligent systems and anomaly detection.\n\nHer recent work includes adaptive outlier-detection algorithms, anomaly detection in medical images, and natural language applications of large language models for low-resource Malay and religious texts.",
+      "Azliza Mohd Ali is a Senior Lecturer at Universiti Teknologi MARA. Her research interests are intelligent systems and anomaly detection.\n\nHer recent work includes adaptive outlier-detection algorithms, anomaly detection in medical images, and natural language applications of large language models for low-resource Malay and religious texts.",
     researchInterests: ["Intelligent systems", "Anomaly detection"],
     googleScholar: "https://scholar.google.com/citations?hl=en&user=L52PakYAAAAJ",
   },
