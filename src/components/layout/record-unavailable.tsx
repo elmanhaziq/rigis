@@ -7,7 +7,7 @@ export function RecordUnavailable({ kind }: { kind: "project" | "profile" }) {
   return (
     <div className="container-page py-24 sm:py-32">
       <p className="eyebrow flex items-center gap-3">
-        <span className="rule-brass" aria-hidden="true" />
+        <span className="rule-accent" aria-hidden="true" />
         {project ? "Research" : "People"}
       </p>
       <h1 className="mt-4 font-heading text-4xl font-extrabold sm:text-5xl">

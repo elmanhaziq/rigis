@@ -81,7 +81,7 @@ export function ResearcherPanelContent({
                     <button
                       type="button"
                       onClick={() => onSelectArea(area.slug)}
-                      className="inline-flex min-h-9 items-center gap-1.5 rounded-sm border border-navy-800/30 bg-card px-3 text-sm font-medium text-navy-900 transition-colors hover:border-navy-800 hover:bg-accent"
+                      className="inline-flex min-h-9 items-center gap-1.5 rounded-sm border border-purple-400/70 bg-card px-3 text-sm font-medium text-navy-900 transition-colors hover:border-purple-700 hover:bg-accent"
                       aria-label={`${interest} — explore ${area.name}`}
                     >
                       {interest}
@@ -104,7 +104,7 @@ export function ResearcherPanelContent({
           <h3 id="rp-quals" className="eyebrow">Qualifications</h3>
           <ul className="mt-3 space-y-2">
             {profile.qualifications.map((q) => (
-              <li key={`${q.degree}-${q.institution}`} className="border-l-2 border-brass pl-3 text-[0.9375rem]">
+              <li key={`${q.degree}-${q.institution}`} className="border-l-2 border-purple-400 pl-3 text-[0.9375rem]">
                 <span className="font-medium text-navy-900">{q.degree}</span>
                 <span className="text-muted-foreground"> · {q.institution}{q.year ? `, ${q.year}` : ""}</span>
               </li>
@@ -125,7 +125,7 @@ export function ResearcherPanelContent({
                 <button
                   type="button"
                   onClick={() => onSelectResearcher(c.slug)}
-                  className="flex w-full items-center gap-3 rounded-sm border border-border p-2 text-left transition-colors hover:border-navy-800/40"
+                  className="flex w-full items-center gap-3 rounded-sm border border-border p-2 text-left transition-colors hover:border-purple-400"
                 >
                   <ProfileAvatar name={c.fullName} photoUrl={c.photoUrl} className="aspect-square w-10 shrink-0" textClassName="text-xs" />
                   <span className="min-w-0">
@@ -195,7 +195,7 @@ export function ResearcherPanelContent({
           <ul className="mt-2 flex flex-wrap gap-x-5">
             {links.map((l) => (
               <li key={l.label}>
-                <a href={l.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-1.5 text-sm font-semibold text-navy-800 hover:underline">
+                <a href={l.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-1.5 text-sm font-semibold text-purple-700 hover:underline">
                   {l.label}
                   <ExternalLink className="size-3.5" aria-hidden="true" />
                   <span className="sr-only"> (opens in a new tab)</span>

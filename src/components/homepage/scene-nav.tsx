@@ -64,7 +64,7 @@ export function SceneNav() {
                     aria-hidden="true"
                     className={cn(
                       "block h-px transition-all duration-300",
-                      on ? "w-8 bg-brass" : "w-4 bg-slate-brand group-hover:w-6 group-hover:bg-navy-800",
+                      on ? "w-8 bg-purple-700" : "w-4 bg-slate-brand group-hover:w-6 group-hover:bg-purple-400",
                     )}
                   />
                   <span className="sr-only">{s.label}</span>
@@ -105,7 +105,7 @@ export function SceneNav() {
                     active === s.id ? "font-semibold text-navy-900" : "text-muted-foreground",
                   )}
                 >
-                  <span className="w-6 font-heading text-sm text-brass-ink tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="w-6 font-heading text-sm text-purple-700 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                   {s.label}
                 </a>
               </li>

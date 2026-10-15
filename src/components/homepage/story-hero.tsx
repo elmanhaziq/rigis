@@ -10,12 +10,12 @@ export function StoryHero({ data }: { data: PublicDataset }) {
     <section id="enter" aria-labelledby="hero-title" className="relative overflow-hidden bg-navy-900 text-white">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,#9AA9B8_1px,transparent_1px),linear-gradient(to_bottom,#9AA9B8_1px,transparent_1px)] [background-size:72px_72px]"
+        className="pointer-events-none absolute inset-0 opacity-[0.12] [background-image:linear-gradient(to_right,#8B76A5_1px,transparent_1px),linear-gradient(to_bottom,#8B76A5_1px,transparent_1px)] [background-size:72px_72px]"
       />
       <div className="container-page relative grid items-center gap-10 pt-14 pb-16 sm:pt-20 lg:grid-cols-12 lg:gap-8 lg:pt-20 lg:pb-24">
         <div className="lg:col-span-7">
-          <p className="eyebrow flex items-center gap-3 text-white/70">
-            <span className="rule-brass" aria-hidden="true" />
+          <p className="eyebrow flex items-center gap-3 text-purple-200">
+            <span className="rule-accent" aria-hidden="true" />
             RIGIS · Research Initiative Group Intelligent System
           </p>
           <h1

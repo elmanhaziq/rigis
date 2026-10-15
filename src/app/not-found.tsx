@@ -10,7 +10,7 @@ export default function NotFound() {
       <main id="main" className="flex-1">
         <div className="container-page py-24 sm:py-32">
           <p className="eyebrow flex items-center gap-3">
-            <span className="rule-brass" aria-hidden="true" />
+            <span className="rule-accent" aria-hidden="true" />
             Error 404
           </p>
           <h1 className="mt-4 font-heading text-4xl font-extrabold sm:text-5xl">Page not found</h1>

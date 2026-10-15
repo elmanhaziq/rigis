@@ -30,7 +30,7 @@ export function ProjectCard({
     <article
       className={cn(
         "group relative flex h-full flex-col overflow-hidden border border-border bg-card transition-[border-color,box-shadow] duration-200",
-        "hover:border-navy-800/40 hover:shadow-[0_12px_32px_-18px_rgba(16,36,58,0.35)]",
+        "hover:border-purple-400 hover:shadow-[0_12px_32px_-18px_rgba(16,36,58,0.35)]",
         feature && "md:flex-row",
       )}
     >
@@ -60,7 +60,7 @@ export function ProjectCard({
         >
           <Link
             href={projectHref(project.slug)}
-            className="after:absolute after:inset-0 focus-visible:outline-none after:focus-visible:outline-2 after:focus-visible:outline-offset-[-2px] after:focus-visible:outline-navy-800"
+            className="after:absolute after:inset-0 focus-visible:outline-none after:focus-visible:outline-2 after:focus-visible:outline-offset-[-2px] after:focus-visible:outline-purple-700"
           >
             {project.title}
           </Link>
@@ -88,7 +88,7 @@ export function ProjectCard({
               )}
             </p>
             <ArrowUpRight
-              className="size-4 shrink-0 text-navy-800 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              className="size-4 shrink-0 text-purple-700 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               aria-hidden="true"
             />
           </div>

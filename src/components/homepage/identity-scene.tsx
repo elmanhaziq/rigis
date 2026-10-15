@@ -42,7 +42,7 @@ export function IdentityScene({ site }: { site: SiteContent }) {
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-28">
             <p className="eyebrow flex items-center gap-3">
-              <span className="rule-brass" aria-hidden="true" />
+              <span className="rule-accent" aria-hidden="true" />
               02 · Understanding RIGIS
             </p>
             <h2 id="identity-title" className="mt-4 font-heading text-[2rem] leading-[1.1] font-bold sm:text-[2.75rem]">
@@ -57,7 +57,7 @@ export function IdentityScene({ site }: { site: SiteContent }) {
                     aria-current={active === i ? "step" : undefined}
                     className={cn(
                       "-ml-px flex min-h-11 items-center gap-4 border-l-2 pl-5 text-[0.9375rem] transition-colors duration-300",
-                      active === i ? "border-brass font-semibold text-navy-900" : "border-transparent text-muted-foreground hover:text-navy-900",
+                      active === i ? "border-purple-700 font-semibold text-purple-700" : "border-transparent text-muted-foreground hover:text-navy-900",
                     )}
                   >
                     <span className="w-6 font-heading text-sm tabular-nums">{String(i + 1).padStart(2, "0")}</span>
@@ -87,9 +87,9 @@ export function IdentityScene({ site }: { site: SiteContent }) {
               data-index={i}
               className="scroll-mt-28 border-t border-border py-10 first:border-t-0 first:pt-0 lg:flex lg:min-h-[26rem] lg:flex-col lg:justify-center lg:border-t-0 lg:py-16 lg:first:pt-16"
             >
-              <h3 className="flex items-center gap-3 font-sans text-[0.8125rem] font-semibold tracking-[0.14em] text-brass-ink uppercase">
+              <h3 className="flex items-center gap-3 font-sans text-[0.8125rem] font-semibold tracking-[0.14em] text-purple-700 uppercase">
                 <span className="tabular-nums">{String(i + 1).padStart(2, "0")}</span>
-                <span className="h-px w-8 bg-brass" aria-hidden="true" />
+                <span className="h-px w-8 bg-purple-400" aria-hidden="true" />
                 {s.label}
               </h3>
               <p
@@ -104,7 +104,7 @@ export function IdentityScene({ site }: { site: SiteContent }) {
           ))}
           <Link
             href="/about/"
-            className="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-navy-800 hover:underline lg:mt-0"
+            className="mt-4 inline-flex min-h-11 items-center gap-2 font-semibold text-purple-700 hover:underline lg:mt-0"
           >
             Objectives and full background
             <ArrowRight className="size-4" aria-hidden="true" />

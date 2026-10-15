@@ -113,14 +113,27 @@ announcements).
 
 ### Design system
 
-Tokens are in `src/app/globals.css`: navy `#10243A` / `#1D4263`, paper
-`#F4F6F8`, slate `#9AA9B8`, brass `#B89B68`; Manrope headings, Inter body.
-Brass and slate fail 4.5:1 contrast on light surfaces, so they are used only
-for rules, borders and ornament; brass text appears only on navy, and the
-darker `--brass-ink` is used for small numerals on light backgrounds.
-Statuses always pair an icon and a label with colour. Scroll reveals use CSS
-scroll-driven animation (content is visible without JS) and all motion
-respects `prefers-reduced-motion`.
+Tokens live in `src/app/globals.css`; `src/config/palette.ts` mirrors them for
+SVG attributes and graph styles. The palette is UiTM-inspired but RIGIS-owned
+(no UiTM marks or implied endorsement):
+
+| Token | Hex | Role |
+| --- | --- | --- |
+| Midnight Navy `--navy-900` | #17243B | Dark environments: hero, network, footer |
+| Warm Ivory `--ivory` / `--background` | #F4F0E8 | Editorial page background |
+| White `--card` | #FFFFFF | Content surfaces |
+| Academic Purple `--purple-700` / `--primary` | #4B216D | Buttons, links, active navigation, selected states, closing section |
+| Soft Purple `--purple-400` | #8B76A5 | Section rules, borders, network lines |
+| Lavender `--purple-200` | #CFC3DF | Text and selected connections on navy/purple |
+| Muted Gold `--brass` | #B89B68 | Sparing highlights (hero headline, co-authored papers) |
+| Slate `--slate` | #AAB6C2 | Borders; secondary text on navy only |
+
+Research areas each carry an `accent` (markers and graph nodes only).
+Contrast: every text/background pairing meets WCAG AA (automated scan of
+1,019 text elements across all pages at 1280px and 390px; lowest 4.56:1).
+Soft purple, slate and gold are never used for body text on light surfaces.
+Headings use Manrope, body Inter. Statuses always pair an icon and label with
+colour, and all motion respects `prefers-reduced-motion`.
 
 ### Windows build note
 

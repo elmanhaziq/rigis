@@ -37,7 +37,7 @@ export function SectionHeading({
       <div className={cn(align === "split" && "lg:col-span-7")}>
         {eyebrow && (
           <p className={cn("eyebrow flex items-center gap-3", inverted && "text-white/70")}>
-            <span className="rule-brass" aria-hidden="true" />
+            <span className="rule-accent" aria-hidden="true" />
             {eyebrow}
           </p>
         )}

@@ -46,9 +46,9 @@ export function SiteHeader() {
                     aria-current={active ? "page" : undefined}
                     className={cn(
                       "relative inline-flex h-10 items-center px-3.5 text-[0.9375rem] font-medium transition-colors",
-                      "after:absolute after:inset-x-3.5 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-brass after:transition-transform after:duration-200",
-                      "hover:text-navy-900 hover:after:scale-x-100",
-                      active ? "text-navy-900 after:scale-x-100" : "text-muted-foreground",
+                      "after:absolute after:inset-x-3.5 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-purple-700 after:transition-transform after:duration-200",
+                      "hover:text-purple-700 hover:after:scale-x-100",
+                      active ? "text-purple-700 after:scale-x-100" : "text-muted-foreground",
                     )}
                   >
                     {item.label}
@@ -90,10 +90,10 @@ export function SiteHeader() {
                           aria-current={active ? "page" : undefined}
                           className={cn(
                             "flex min-h-12 items-center font-heading text-lg font-semibold",
-                            active ? "text-navy-900" : "text-muted-foreground",
+                            active ? "text-purple-700" : "text-muted-foreground",
                           )}
                         >
-                          {active && <span className="mr-3 h-4 w-px bg-brass" aria-hidden="true" />}
+                          {active && <span className="mr-3 h-4 w-0.5 bg-purple-700" aria-hidden="true" />}
                           {item.label}
                         </Link>
                       </li>

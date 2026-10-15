@@ -5,56 +5,76 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * RIGIS design tokens
- * Brand: navy #10243A / #1D4263, paper #F4F6F8, slate #9AA9B8, brass #B89B68.
- * Brass and slate fail 4.5:1 as text on light surfaces, so they are used for
- * rules, borders and ornament only. Text uses --ink / --muted-foreground, and
- * brass text only ever sits on navy (6:1).
+ * RIGIS design tokens — "UiTM-inspired" academic palette
+ *
+ *   Midnight Navy  #17243B  dark environments (hero, network, footer)
+ *   Warm Ivory     #F4F0E8  editorial page background
+ *   White          #FFFFFF  content surfaces
+ *   Academic Purple#4B216D  primary accent: buttons, links, selected states
+ *   Soft Purple    #8B76A5  secondary accent: borders, rules, lines
+ *   Muted Gold     #B89B68  sparing highlights and ornament
+ *   Slate          #AAB6C2  borders; secondary text on navy only
+ *
+ * Contrast (WCAG): purple on white 12.1:1, on ivory 10.6:1; white on purple
+ * 12.1:1. Soft purple (4.0:1 on white, 3.9:1 on navy), slate (2.1:1 on
+ * white) and gold (2.5:1 on white) are therefore never used for body text on
+ * light surfaces. On navy, text uses white, slate (7.6:1), gold (6.0:1) or
+ * --purple-200 (9.6:1). Long-form text never uses gold.
  */
 :root {
-  --navy-950: #0b1a2a;
-  --navy-900: #10243a;
-  --navy-800: #1d4263;
-  --navy-700: #2a5680;
-  --paper: #f4f6f8;
-  --slate: #9aa9b8;
+  --navy-950: #101a2c;
+  --navy-900: #17243b;
+  --navy-800: #22334f;
+  --navy-700: #2f4466;
+  --purple-900: #2e1445;
+  --purple-800: #3b1a58;
+  --purple-700: #4b216d;
+  --purple-400: #8b76a5;
+  --purple-200: #cfc3df;
+  --purple-50: #f3eff7;
+  --ivory: #f4f0e8;
+  --paper: #f4f0e8;
+  --slate: #aab6c2;
   --brass: #b89b68;
   --brass-ink: #7d6232;
+  --success-bg: #ecf6f0;
+  --warning-bg: #fdf6e7;
+  --danger-bg: #fdeeed;
 
-  --background: #f4f6f8;
-  --foreground: #142333;
+  --background: #f4f0e8;
+  --foreground: #1a2333;
   --card: #ffffff;
-  --card-foreground: #142333;
+  --card-foreground: #1a2333;
   --popover: #ffffff;
-  --popover-foreground: #142333;
-  --primary: #10243a;
+  --popover-foreground: #1a2333;
+  --primary: #4b216d;
   --primary-foreground: #ffffff;
-  --secondary: #1d4263;
+  --secondary: #17243b;
   --secondary-foreground: #ffffff;
-  --muted: #e9edf1;
-  --muted-foreground: #4b5b6c;
-  --accent: #eaeef2;
-  --accent-foreground: #10243a;
+  --muted: #ebe6dc;
+  --muted-foreground: #4b5566;
+  --accent: #f3eff7;
+  --accent-foreground: #4b216d;
   --destructive: #b42318;
   --success: #1f6f4a;
   --warning: #8a5a00;
-  --border: #d8dfe6;
-  --input: #c9d2db;
-  --ring: #1d4263;
-  --chart-1: #10243a;
-  --chart-2: #1d4263;
+  --border: #dcd6cb;
+  --input: #858f9c;
+  --ring: #4b216d;
+  --chart-1: #17243b;
+  --chart-2: #4b216d;
   --chart-3: #b89b68;
-  --chart-4: #9aa9b8;
-  --chart-5: #2a5680;
+  --chart-4: #8b76a5;
+  --chart-5: #aab6c2;
   --radius: 0.375rem;
-  --sidebar: #10243a;
+  --sidebar: #17243b;
   --sidebar-foreground: #e6ebf0;
   --sidebar-primary: #b89b68;
-  --sidebar-primary-foreground: #10243a;
-  --sidebar-accent: #1d4263;
+  --sidebar-primary-foreground: #17243b;
+  --sidebar-accent: #4b216d;
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #1d4263;
-  --sidebar-ring: #b89b68;
+  --sidebar-border: #22334f;
+  --sidebar-ring: #8b76a5;
 }
 
 @theme inline {
@@ -68,6 +88,16 @@
   --color-navy-900: var(--navy-900);
   --color-navy-800: var(--navy-800);
   --color-navy-700: var(--navy-700);
+  --color-purple-900: var(--purple-900);
+  --color-purple-800: var(--purple-800);
+  --color-purple-700: var(--purple-700);
+  --color-purple-400: var(--purple-400);
+  --color-purple-200: var(--purple-200);
+  --color-purple-50: var(--purple-50);
+  --color-ivory: var(--ivory);
+  --color-success-bg: var(--success-bg);
+  --color-warning-bg: var(--warning-bg);
+  --color-danger-bg: var(--danger-bg);
   --color-paper: var(--paper);
   --color-slate-brand: var(--slate);
   --color-brass: var(--brass);
@@ -140,11 +170,11 @@
     text-wrap: pretty;
   }
   ::selection {
-    background: var(--navy-800);
+    background: var(--purple-700);
     color: #fff;
   }
   :focus-visible {
-    outline: 2px solid var(--navy-800);
+    outline: 2px solid var(--purple-700);
     outline-offset: 2px;
   }
   button:not(:disabled),
@@ -158,9 +188,9 @@
   .eyebrow {
     @apply font-sans text-[0.75rem] font-semibold tracking-[0.14em] uppercase text-muted-foreground;
   }
-  /* Short brass rule used as an editorial section marker. */
-  .rule-brass {
-    @apply block h-px w-10 bg-brass;
+  /* Short soft-purple rule used as an editorial section marker. */
+  .rule-accent {
+    @apply block h-px w-10 bg-purple-400;
   }
   .container-page {
     @apply mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-10;

@@ -55,13 +55,13 @@ export function ResearcherExplorer({ data }: { data: PublicDataset }) {
               aria-haspopup="dialog"
               className="group block focus-visible:outline-none"
             >
-              <span className="relative block overflow-hidden border border-border bg-card group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-navy-800">
+              <span className="relative block overflow-hidden border border-border bg-card group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-purple-700">
                 <ProfileAvatar
                   name={p.fullName}
                   photoUrl={p.photoUrl}
                   className="transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                 />
-                <span className="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-between bg-navy-900/90 px-3 py-2 text-xs font-semibold text-white transition-transform duration-300 group-hover:translate-y-0 group-focus-visible:translate-y-0">
+                <span className="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-between bg-purple-700/95 px-3 py-2 text-xs font-semibold text-white transition-transform duration-300 group-hover:translate-y-0 group-focus-visible:translate-y-0">
                   View profile
                   <ArrowUpRight className="size-3.5" aria-hidden="true" />
                 </span>

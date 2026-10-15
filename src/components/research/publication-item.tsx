@@ -44,7 +44,7 @@ export function PublicationItem({
               <span key={`${a.displayName}-${i}`}>
                 {i > 0 && ", "}
                 {p ? (
-                  <Link href={profileHref(p.slug)} className="font-medium text-navy-800 hover:underline">
+                  <Link href={profileHref(p.slug)} className="font-medium text-purple-700 hover:underline">
                     {a.displayName}
                   </Link>
                 ) : (

@@ -18,6 +18,8 @@ export type NetworkNode = {
   /** Underlying record id (profile/project/area/publication id). */
   refId: string;
   status: ContentStatus;
+  /** Discipline accent for research-area nodes. */
+  accent?: string;
 };
 
 /**
@@ -115,6 +117,7 @@ export function buildNetworkGraph(data: PublicDataset, options: GraphOptions = d
         href: `/research/?area=${a.slug}`,
         refId: a.id,
         status: a.status,
+        accent: a.accent,
       });
     }
     return key;

@@ -20,6 +20,7 @@ export const researchAreas: ResearchArea[] = [
     slug: "machine-learning",
     name: "Machine Learning & Data Analytics",
     shortName: "Machine Learning",
+    accent: "#B89B68",
     description:
       "Learning algorithms, predictive modelling, data mining and the analysis of complex, real-world datasets.",
     interestKeywords: ["machine learning", "data analytics", "data mining", "anomaly detection", "predictive"],
@@ -30,6 +31,7 @@ export const researchAreas: ResearchArea[] = [
     slug: "computer-vision",
     name: "Computer Vision & Imaging",
     shortName: "Computer Vision",
+    accent: "#6A93B8",
     description:
       "Image understanding, object detection and visual analysis for scientific and applied settings.",
     interestKeywords: ["computer vision", "image processing", "imaging", "object detection"],
@@ -40,6 +42,7 @@ export const researchAreas: ResearchArea[] = [
     slug: "natural-language-processing",
     name: "Natural Language Processing",
     shortName: "Language Processing",
+    accent: "#8B76A5",
     description:
       "Computational methods for understanding, generating and analysing human language, including sentiment analysis and large language models.",
     interestKeywords: ["natural language", "nlp", "text mining", "sentiment", "language model"],
@@ -50,6 +53,7 @@ export const researchAreas: ResearchArea[] = [
     slug: "decision-support",
     name: "Intelligent Decision Support",
     shortName: "Decision Support",
+    accent: "#6F9C86",
     description:
       "Optimisation, reasoning and recommender systems that help people make better decisions.",
     interestKeywords: ["decision support", "recommender", "optimisation", "optimization"],
@@ -60,6 +64,7 @@ export const researchAreas: ResearchArea[] = [
     slug: "iot-embedded-intelligence",
     name: "IoT & Embedded Intelligence",
     shortName: "IoT & Embedded",
+    accent: "#C2825F",
     description:
       "Sensing, edge computing and intelligent behaviour in connected and embedded devices.",
     interestKeywords: ["internet of things", "iot", "edge computing", "embedded"],
@@ -70,6 +75,7 @@ export const researchAreas: ResearchArea[] = [
     slug: "responsible-ai",
     name: "Responsible & Explainable AI",
     shortName: "Responsible AI",
+    accent: "#B97893",
     description:
       "Transparency, fairness, accountability and human-centred evaluation of intelligent systems.",
     interestKeywords: ["explainable", "responsible ai", "fairness", "ai ethics"],

@@ -70,7 +70,7 @@ export function ContactForm() {
 
   if (status.kind === "sent") {
     return (
-      <div role="status" className="border border-success/30 bg-[#ecf6f0] p-8">
+      <div role="status" className="border border-success/30 bg-success-bg p-8">
         <CheckCircle2 className="size-6 text-success" aria-hidden="true" />
         <h3 className="mt-4 font-heading text-xl font-bold">Thank you — your message has been sent</h3>
         <p className="mt-2 text-muted-foreground">A member of the group will reply to the email address you provided.</p>
@@ -147,7 +147,7 @@ export function ContactForm() {
             name="consent"
             aria-invalid={errors.consent ? true : undefined}
             aria-describedby={errors.consent ? "contact-consent-error" : undefined}
-            className="mt-1 size-4 shrink-0 accent-navy-900"
+            className="mt-1 size-4 shrink-0 accent-purple-700"
           />
           <span>I agree that RIGIS may store my details to respond to this enquiry.</span>
         </label>
@@ -159,7 +159,7 @@ export function ContactForm() {
       </div>
 
       {status.kind === "failed" && (
-        <div role="alert" className="flex gap-3 border border-warning/40 bg-[#fdf6e7] p-4 text-[0.9375rem] sm:col-span-2">
+        <div role="alert" className="flex gap-3 border border-warning/40 bg-warning-bg p-4 text-[0.9375rem] sm:col-span-2">
           <AlertCircle className="mt-0.5 size-5 shrink-0 text-warning" aria-hidden="true" />
           <p>{status.message}</p>
         </div>

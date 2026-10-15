@@ -62,6 +62,8 @@ export interface ResearchArea {
   name: string;
   /** Compact label for dense visualisations. */
   shortName: string;
+  /** Discipline accent (markers and graph nodes only — never text on light surfaces). */
+  accent: string;
   description: string | null;
   /**
    * Terms used to connect a researcher's self-declared research interests to

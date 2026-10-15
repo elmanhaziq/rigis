@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 const projectStatus: Record<ProjectStatus, { label: string; icon: typeof Clock3; className: string }> = {
   proposed: { label: "Proposed", icon: CircleDashed, className: "border-slate-brand text-muted-foreground" },
-  ongoing: { label: "Ongoing", icon: PlayCircle, className: "border-navy-800/40 text-navy-800" },
+  ongoing: { label: "Ongoing", icon: PlayCircle, className: "border-purple-400 text-purple-700" },
   completed: { label: "Completed", icon: CheckCircle2, className: "border-success/40 text-success" },
 };
 
@@ -28,9 +28,9 @@ export function ProjectStatusBadge({ status, className }: { status: ProjectStatu
 
 const approvalStatus: Record<ApprovalStatus, { label: string; icon: typeof Clock3; className: string }> = {
   draft: { label: "Draft", icon: FileEdit, className: "border-input text-muted-foreground bg-card" },
-  pending: { label: "Pending review", icon: Clock3, className: "border-warning/40 text-warning bg-[#fdf6e7]" },
-  approved: { label: "Approved", icon: CheckCircle2, className: "border-success/40 text-success bg-[#ecf6f0]" },
-  rejected: { label: "Changes requested", icon: XCircle, className: "border-destructive/40 text-destructive bg-[#fdeeed]" },
+  pending: { label: "Pending review", icon: Clock3, className: "border-warning/40 text-warning bg-warning-bg" },
+  approved: { label: "Approved", icon: CheckCircle2, className: "border-success/40 text-success bg-success-bg" },
+  rejected: { label: "Changes requested", icon: XCircle, className: "border-destructive/40 text-destructive bg-danger-bg" },
   archived: { label: "Archived", icon: Archive, className: "border-input text-muted-foreground bg-muted" },
 };
 

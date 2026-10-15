@@ -31,7 +31,7 @@ export function ResearcherCard({
         <H className="mt-2 font-heading text-lg leading-snug font-bold">
           <Link
             href={profileHref(profile.slug)}
-            className="link-underline after:absolute after:inset-0 focus-visible:outline-none after:focus-visible:outline-2 after:focus-visible:outline-offset-2 after:focus-visible:outline-navy-800"
+            className="link-underline after:absolute after:inset-0 focus-visible:outline-none after:focus-visible:outline-2 after:focus-visible:outline-offset-2 after:focus-visible:outline-purple-700"
           >
             {displayName(profile)}
           </Link>

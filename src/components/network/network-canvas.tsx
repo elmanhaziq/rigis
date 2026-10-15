@@ -18,6 +18,7 @@ import {
 import { layoutNetwork, relatedIds, type NetworkGraph, type NetworkNode } from "@/lib/network/graph";
 import { ProfileAvatar } from "@/components/people/profile-avatar";
 import { cn } from "@/lib/utils";
+import { palette } from "@/config/palette";
 
 type NodeData = NetworkNode & { state: "default" | "active" | "related" | "dimmed" };
 type FlowNode = Node<NodeData>;
@@ -26,15 +27,15 @@ const ring = (s: NodeData["state"]) =>
   cn(
     "transition-[opacity,box-shadow] duration-200",
     s === "dimmed" && "opacity-20",
-    s === "active" && "ring-2 ring-brass ring-offset-2 ring-offset-paper",
+    s === "active" && "ring-2 ring-purple-200 ring-offset-2 ring-offset-navy-900",
   );
 const handle = "!size-1.5 !min-h-0 !min-w-0 !border-0 !bg-transparent";
 
 const ResearcherNode = memo(function ResearcherNode({ data }: NodeProps<FlowNode>) {
   return (
-    <div className={cn("flex w-[240px] items-center gap-3 rounded-full border border-navy-900/25 bg-card py-1.5 pr-4 pl-1.5 shadow-sm", ring(data.state))}>
+    <div className={cn("flex w-[240px] items-center gap-3 rounded-full border border-white/20 bg-card py-1.5 pr-4 pl-1.5 shadow-md", ring(data.state))}>
       <Handle type="target" position={Position.Left} className={handle} />
-      <span className="size-11 shrink-0 overflow-hidden rounded-full bg-navy-900">
+      <span className="size-11 shrink-0 overflow-hidden rounded-full bg-navy-900 ring-2 ring-purple-700">
         <ProfileAvatar name={data.label} photoUrl={data.photoUrl} className="aspect-square w-11" textClassName="text-[0.625rem]" />
       </span>
       <span className="min-w-0">
@@ -48,9 +49,9 @@ const ResearcherNode = memo(function ResearcherNode({ data }: NodeProps<FlowNode
 
 const ProjectNode = memo(function ProjectNode({ data }: NodeProps<FlowNode>) {
   return (
-    <div className={cn("w-[250px] rounded-sm border border-navy-900 bg-navy-900 px-3.5 py-2.5 text-white shadow-sm", ring(data.state))}>
+    <div className={cn("w-[250px] rounded-sm border border-purple-400 bg-purple-700 px-3.5 py-2.5 text-white shadow-md", ring(data.state))}>
       <Handle type="target" position={Position.Left} className={handle} />
-      <span className="block text-[0.625rem] font-semibold tracking-[0.12em] text-brass uppercase">Project · {data.sublabel}</span>
+      <span className="block text-[0.625rem] font-semibold tracking-[0.12em] text-purple-200 uppercase">Project · {data.sublabel}</span>
       <span className="mt-0.5 line-clamp-2 text-[0.8125rem] leading-snug font-semibold">{data.label}</span>
       <Handle type="source" position={Position.Right} className={handle} />
     </div>
@@ -59,7 +60,7 @@ const ProjectNode = memo(function ProjectNode({ data }: NodeProps<FlowNode>) {
 
 const PublicationNode = memo(function PublicationNode({ data }: NodeProps<FlowNode>) {
   return (
-    <div className={cn("w-[260px] rounded-sm border border-border border-l-[3px] border-l-brass bg-card px-3 py-2 shadow-sm", ring(data.state))}>
+    <div className={cn("w-[260px] rounded-sm border border-white/20 border-l-[3px] border-l-brass bg-card px-3 py-2 shadow-md", ring(data.state))}>
       <Handle type="target" position={Position.Left} className={handle} />
       <span className="block text-[0.625rem] font-semibold tracking-[0.12em] text-brass-ink uppercase">Paper · {data.sublabel}</span>
       <span className="mt-0.5 line-clamp-2 text-[0.75rem] leading-snug font-medium text-navy-900">{data.label}</span>
@@ -69,9 +70,12 @@ const PublicationNode = memo(function PublicationNode({ data }: NodeProps<FlowNo
 
 const AreaNode = memo(function AreaNode({ data }: NodeProps<FlowNode>) {
   return (
-    <div className={cn("flex w-[220px] items-center gap-2.5 rounded-sm border border-brass bg-[#f7f1e6] px-3 py-2.5", ring(data.state))}>
-      <span className="size-2.5 shrink-0 rotate-45 bg-brass" aria-hidden="true" />
-      <span className="text-[0.8125rem] leading-snug font-semibold text-navy-900">{data.label}</span>
+    <div
+      className={cn("flex w-[220px] items-center gap-2.5 rounded-sm border bg-navy-800 px-3 py-2.5 shadow-md", ring(data.state))}
+      style={{ borderColor: data.accent ?? palette.gold }}
+    >
+      <span className="size-2.5 shrink-0 rotate-45" style={{ background: data.accent ?? palette.gold }} aria-hidden="true" />
+      <span className="text-[0.8125rem] leading-snug font-semibold text-white">{data.label}</span>
       <Handle type="source" position={Position.Right} className={handle} />
     </div>
   );
@@ -80,10 +84,10 @@ const AreaNode = memo(function AreaNode({ data }: NodeProps<FlowNode>) {
 const nodeTypes = { researcher: ResearcherNode, project: ProjectNode, publication: PublicationNode, area: AreaNode };
 
 const edgeStyle: Record<string, React.CSSProperties> = {
-  participates: { stroke: "#1D4263" },
-  belongs: { stroke: "#B89B68" },
-  authored: { stroke: "#9AA9B8" },
-  interest: { stroke: "#B89B68", strokeDasharray: "5 5" },
+  participates: { stroke: palette.purple400 },
+  belongs: { stroke: palette.gold },
+  authored: { stroke: palette.slate },
+  interest: { stroke: palette.purple400, strokeDasharray: "5 5" },
 };
 
 export interface NetworkCanvasProps {
@@ -143,8 +147,10 @@ function Canvas({ graph, selectedId, hoveredId, scope, fitToken, onSelect, onHov
           focusable: false,
           style: {
             ...edgeStyle[e.kind],
-            strokeWidth: lit && (related || scope) ? 2 : 1.2,
-            opacity: lit ? (related || scope ? 1 : 0.65) : 0.08,
+            // Selected connections switch to lavender so they stand out from every edge colour.
+            ...(lit && related ? { stroke: palette.purple200 } : {}),
+            strokeWidth: lit && (related || scope) ? 2.2 : 1.2,
+            opacity: lit ? (related || scope ? 1 : 0.55) : 0.1,
             transition: "opacity 200ms, stroke-width 200ms",
           },
         };
@@ -184,7 +190,7 @@ function Canvas({ graph, selectedId, hoveredId, scope, fitToken, onSelect, onHov
       onPaneClick={() => onSelect(null)}
       aria-label="Research network graph"
     >
-      <Background variant={BackgroundVariant.Dots} gap={22} size={1} color="#c9d2db" />
+      <Background variant={BackgroundVariant.Dots} gap={22} size={1} color={palette.navy700} />
       <Controls showInteractive={false} position="bottom-left" />
     </ReactFlow>
   );

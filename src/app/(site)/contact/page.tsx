@@ -34,15 +34,15 @@ export default async function ContactPage() {
             <h2 id="group-contact" className="eyebrow">Research group contact</h2>
             <ul className="mt-4 space-y-4 text-[0.9375rem]">
               <li className="flex gap-3">
-                <Mail className="mt-0.5 size-4 shrink-0 text-navy-800" aria-hidden="true" />
+                <Mail className="mt-0.5 size-4 shrink-0 text-purple-700" aria-hidden="true" />
                 {site.contactEmail ? (
-                  <a href={`mailto:${site.contactEmail}`} className="break-all text-navy-800 hover:underline">{site.contactEmail}</a>
+                  <a href={`mailto:${site.contactEmail}`} className="break-all text-purple-700 hover:underline">{site.contactEmail}</a>
                 ) : notSet}
               </li>
               <li className="flex gap-3">
-                <Phone className="mt-0.5 size-4 shrink-0 text-navy-800" aria-hidden="true" />
+                <Phone className="mt-0.5 size-4 shrink-0 text-purple-700" aria-hidden="true" />
                 {site.contactPhone ? (
-                  <a href={`tel:${site.contactPhone.replace(/\s/g, "")}`} className="text-navy-800 hover:underline">{site.contactPhone}</a>
+                  <a href={`tel:${site.contactPhone.replace(/\s/g, "")}`} className="text-purple-700 hover:underline">{site.contactPhone}</a>
                 ) : notSet}
               </li>
             </ul>
@@ -51,7 +51,7 @@ export default async function ContactPage() {
           <section aria-labelledby="address">
             <h2 id="address" className="eyebrow">Institutional address</h2>
             <div className="mt-4 flex gap-3 text-[0.9375rem]">
-              <Building2 className="mt-0.5 size-4 shrink-0 text-navy-800" aria-hidden="true" />
+              <Building2 className="mt-0.5 size-4 shrink-0 text-purple-700" aria-hidden="true" />
               <div>
                 <p className="font-medium text-navy-900">{site.affiliation}</p>
                 <p className="mt-1 text-muted-foreground">{site.address ?? notSet}</p>
@@ -63,7 +63,7 @@ export default async function ContactPage() {
             <h2 id="enquiry-types" className="eyebrow">How we can help</h2>
             <ul className="mt-5 space-y-6">
               <li className="flex gap-4">
-                <Handshake className="mt-0.5 size-5 shrink-0 text-navy-800" aria-hidden="true" />
+                <Handshake className="mt-0.5 size-5 shrink-0 text-purple-700" aria-hidden="true" />
                 <div>
                   <h3 className="font-heading font-bold">Collaboration enquiries</h3>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
@@ -72,7 +72,7 @@ export default async function ContactPage() {
                 </div>
               </li>
               <li className="flex gap-4">
-                <Search className="mt-0.5 size-5 shrink-0 text-navy-800" aria-hidden="true" />
+                <Search className="mt-0.5 size-5 shrink-0 text-purple-700" aria-hidden="true" />
                 <div>
                   <h3 className="font-heading font-bold">Research enquiries</h3>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">

@@ -8,6 +8,7 @@ import type { PublicDataset } from "@/lib/data";
 import { displayName } from "@/lib/data/selectors";
 import { areasForInterest, collaboratorsFor, memberAuthors } from "@/lib/data/relationships";
 import { cn } from "@/lib/utils";
+import { palette } from "@/config/palette";
 
 const C = 300; // viewBox centre
 const R_PEOPLE = 118;
@@ -119,7 +120,8 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
         </defs>
 
         <g style={layer(14)} aria-hidden="true">
-          <circle cx={C} cy={C} r={R_AREAS} fill="none" stroke="#9AA9B8" strokeOpacity="0.14" />
+          <circle cx={C} cy={C} r={R_AREAS} fill="none" stroke={palette.purple400} strokeOpacity="0.35" />
+          <circle cx={C} cy={C} r={R_PEOPLE + 62} fill="none" stroke={palette.purple400} strokeOpacity="0.14" />
           {model.interestLinks.map(({ profileId, areaId }) => {
             const a = areaPos.get(areaId)!;
             const p = model.posOf.get(profileId)!;
@@ -127,7 +129,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
               <line
                 key={`${profileId}-${areaId}`}
                 x1={p.x} y1={p.y} x2={a.x} y2={a.y}
-                stroke="#B89B68"
+                stroke={palette.purple400}
                 strokeDasharray="3 5"
                 strokeOpacity={lit([profileId]) ? 0.7 : 0.08}
                 style={{ transition: "stroke-opacity 250ms" }}
@@ -139,7 +141,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
             const right = pos.x >= C;
             return (
               <g key={area.id} style={{ opacity: on ? 1 : 0.3, transition: "opacity 250ms" }}>
-                <rect x={pos.x - 6} y={pos.y - 6} width="12" height="12" transform={`rotate(45 ${pos.x} ${pos.y})`} fill="#B89B68" />
+                <rect x={pos.x - 6} y={pos.y - 6} width="12" height="12" transform={`rotate(45 ${pos.x} ${pos.y})`} fill={area.accent} />
                 <text
                   x={pos.x + (Math.abs(pos.x - C) < 10 ? 0 : right ? 14 : -14)}
                   y={pos.y + (Math.abs(pos.x - C) < 10 ? (pos.y < C ? -16 : 26) : 4)}
@@ -163,7 +165,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
                   x1={p.x} y1={p.y} x2={pos.x} y2={pos.y}
                   pathLength={1}
                   className="hero-draw"
-                  stroke="#9AA9B8"
+                  stroke={palette.slate}
                   strokeOpacity={lit(authors) ? 0.35 : 0.06}
                   style={{ transition: "stroke-opacity 250ms" }}
                 />
@@ -176,7 +178,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
               cx={pos.x}
               cy={pos.y}
               r={shared ? 5 : 3.2}
-              fill={shared ? "#B89B68" : "#E6EBF0"}
+              fill={shared ? palette.gold : palette.purple200}
               opacity={lit(authors) ? 1 : 0.18}
               style={{ transition: "opacity 250ms" }}
             />
@@ -202,9 +204,9 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
                     setActive(profile.id);
                   }
                 }}
-                className="cursor-pointer outline-none [&:focus-visible>circle:first-child]:stroke-brass"
+                className="cursor-pointer outline-none [&:focus-visible>circle:first-child]:stroke-purple-200"
               >
-                <circle cx={pos.x} cy={pos.y} r="34" fill="#10243A" stroke={on ? "#B89B68" : "#ffffff"} strokeOpacity={on ? 1 : 0.85} strokeWidth={on ? 3 : 1.5} style={{ transition: "stroke 200ms" }} />
+                <circle cx={pos.x} cy={pos.y} r="34" fill={palette.navy900} stroke={on ? palette.purple200 : palette.white} strokeOpacity={on ? 1 : 0.85} strokeWidth={on ? 3 : 1.5} style={{ transition: "stroke 200ms" }} />
                 {profile.photoUrl ? (
                   <image
                     href={profile.photoUrl}
@@ -237,7 +239,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
             {activeStats.areas > 0 && ` · interests in ${activeStats.areas} research ${activeStats.areas === 1 ? "area" : "areas"}`}
             <Link
               href={`/people/${activeProfile.slug}/`}
-              className="mt-1 flex min-h-8 items-center gap-1 text-sm font-semibold text-brass hover:underline"
+              className="mt-1 flex min-h-8 items-center gap-1 text-sm font-semibold text-purple-200 hover:underline"
             >
               View profile <ArrowRight className="size-3.5" aria-hidden="true" />
             </Link>

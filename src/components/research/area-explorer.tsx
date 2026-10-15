@@ -91,7 +91,7 @@ export function AreaExplorer({
         aria-label="Research areas"
         aria-orientation={desktop ? "vertical" : "horizontal"}
         onKeyDown={onKeyDown}
-        className="-mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] lg:col-span-5 lg:mx-0 lg:flex-col lg:gap-0 lg:overflow-visible lg:border-t lg:border-navy-900 lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
+        className="-mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] lg:col-span-5 lg:mx-0 lg:flex-col lg:gap-0 lg:overflow-visible lg:border-t lg:border-purple-700 lg:px-0 lg:pb-0 [&::-webkit-scrollbar]:hidden"
       >
         {data.areas.map((a, i) => {
           const selected = a.id === area.id;
@@ -110,18 +110,19 @@ export function AreaExplorer({
               onClick={() => select(a.slug)}
               className={cn(
                 "group relative flex shrink-0 snap-start items-center gap-3 rounded-sm border px-4 py-3 text-left transition-colors duration-200",
-                "lg:rounded-none lg:border-0 lg:border-b lg:border-border lg:px-0 lg:py-5",
-                selected ? "border-navy-900 bg-navy-900 text-white lg:bg-transparent lg:text-navy-900" : "border-border bg-card text-navy-900 hover:border-navy-800/40 lg:bg-transparent",
+                "lg:rounded-none lg:border-0 lg:border-b lg:border-border lg:px-4 lg:py-5",
+                selected ? "border-primary bg-primary text-primary-foreground lg:bg-purple-50 lg:text-purple-700" : "border-border bg-card text-navy-900 hover:border-purple-400 lg:bg-transparent lg:hover:bg-card",
               )}
             >
               <span
                 aria-hidden="true"
                 className={cn(
-                  "hidden h-full w-0.5 self-stretch transition-colors lg:absolute lg:top-0 lg:-left-4 lg:block",
-                  selected ? "bg-brass" : "bg-transparent",
+                  "hidden h-full w-1 self-stretch transition-colors lg:absolute lg:top-0 lg:left-0 lg:block",
+                  selected ? "bg-purple-700" : "bg-transparent",
                 )}
               />
-              <span className={cn("font-heading text-sm font-semibold tabular-nums", selected ? "text-brass lg:text-brass-ink" : "text-brass-ink")}>
+              <span aria-hidden="true" className="size-2.5 shrink-0 rotate-45" style={{ background: a.accent }} />
+              <span className={cn("font-heading text-sm font-semibold tabular-nums", selected ? "text-purple-200 lg:text-purple-700" : "text-muted-foreground")}>
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="min-w-0">
@@ -134,7 +135,7 @@ export function AreaExplorer({
                 </span>
               </span>
               <ArrowRight
-                className={cn("ml-auto hidden size-4 shrink-0 transition-all lg:block", selected ? "translate-x-0 text-navy-900" : "-translate-x-1 text-transparent group-hover:text-muted-foreground")}
+                className={cn("ml-auto hidden size-4 shrink-0 transition-all lg:block", selected ? "translate-x-0 text-purple-700" : "-translate-x-1 text-transparent group-hover:text-muted-foreground")}
                 aria-hidden="true"
               />
             </button>
@@ -150,10 +151,11 @@ export function AreaExplorer({
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? undefined : { opacity: 0, transition: { duration: 0.12 } }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="border border-border bg-card p-6 sm:p-8"
+            className="border border-border border-t-4 bg-card p-6 sm:p-8" style={{ borderTopColor: area.accent }}
           >
             <div className="flex flex-wrap items-center gap-3">
-              <span className="font-heading text-sm font-semibold text-brass-ink tabular-nums">{String(index + 1).padStart(2, "0")}</span>
+              <span aria-hidden="true" className="size-3 rotate-45" style={{ background: area.accent }} />
+              <span className="font-heading text-sm font-semibold text-purple-700 tabular-nums">{String(index + 1).padStart(2, "0")}</span>
               <StatusTag status={area.status} />
             </div>
             <H className="mt-3 font-heading text-2xl leading-tight font-bold sm:text-[1.875rem]">{area.name}</H>
@@ -175,7 +177,7 @@ export function AreaExplorer({
                           if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
                           if (requestResearcherPanel(profile.slug)) e.preventDefault();
                         }}
-                        className="group flex items-center gap-3 rounded-sm border border-border p-2.5 transition-colors hover:border-navy-800/40"
+                        className="group flex items-center gap-3 rounded-sm border border-border p-2.5 transition-colors hover:border-purple-400"
                       >
                         <ProfileAvatar
                           name={profile.fullName}
@@ -208,14 +210,14 @@ export function AreaExplorer({
               <h4 className="eyebrow">Approved projects</h4>
               {projects.length === 0 ? (
                 <p className="mt-3 flex items-start gap-2 text-[0.9375rem] text-muted-foreground">
-                  <FlaskConical className="mt-0.5 size-4 shrink-0 text-navy-800" aria-hidden="true" />
+                  <FlaskConical className="mt-0.5 size-4 shrink-0 text-purple-700" aria-hidden="true" />
                   No approved projects are linked to this area yet. They will appear here once published.
                 </p>
               ) : (
                 <ul className="mt-4 divide-y divide-border border-y border-border">
                   {projects.map((p) => (
                     <li key={p.id}>
-                      <Link href={projectHref(p.slug)} className="flex min-h-12 items-center justify-between gap-4 py-3 hover:text-navy-700">
+                      <Link href={projectHref(p.slug)} className="flex min-h-12 items-center justify-between gap-4 py-3 hover:text-purple-700">
                         <span className="font-semibold text-navy-900">{p.title}</span>
                         <ProjectStatusBadge status={p.status} />
                       </Link>
@@ -228,7 +230,7 @@ export function AreaExplorer({
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
               <Link
                 href={`/network/?focus=area:${area.id}`}
-                className="inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-navy-800 hover:underline"
+                className="inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-purple-700 hover:underline"
               >
                 <Network className="size-4" aria-hidden="true" />
                 See it in the research network
@@ -236,7 +238,7 @@ export function AreaExplorer({
               {showDirectoryLink && (
                 <Link
                   href={`/research/?area=${area.slug}`}
-                  className="inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-navy-800 hover:underline"
+                  className="inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-purple-700 hover:underline"
                 >
                   Research directory
                   <ArrowRight className="size-4" aria-hidden="true" />

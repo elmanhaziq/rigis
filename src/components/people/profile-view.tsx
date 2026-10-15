@@ -23,7 +23,7 @@ function ExternalProfileLink({ href, label }: { href: string; label: string }) {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex min-h-11 items-center justify-between gap-3 border-b border-border text-[0.9375rem] font-medium text-navy-800 hover:text-navy-900"
+        className="flex min-h-11 items-center justify-between gap-3 border-b border-border text-[0.9375rem] font-medium text-purple-700 hover:text-navy-900"
       >
         {label}
         <span className="text-xs text-muted-foreground" aria-hidden="true">↗</span>
@@ -66,7 +66,7 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
             </div>
             <div className="md:col-span-9 md:pl-4">
               <p className="eyebrow flex flex-wrap items-center gap-3">
-                <span className="rule-brass" aria-hidden="true" />
+                <span className="rule-accent" aria-hidden="true" />
                 {roleLabels[profile.role]}
                 {profile.isDemo && <DemoTag />}
               </p>
@@ -84,7 +84,7 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
                           <Link
                             href={`/research/?area=${area.slug}`}
                             title={`Explore ${area.name}`}
-                            className="inline-flex min-h-9 items-center rounded-sm border border-navy-800/30 bg-card px-3 text-sm text-navy-900 transition-colors hover:border-navy-800 hover:bg-accent"
+                            className="inline-flex min-h-9 items-center rounded-sm border border-purple-400/70 bg-card px-3 text-sm text-navy-900 transition-colors hover:border-purple-700 hover:bg-accent"
                           >
                             {i}
                           </Link>
@@ -144,7 +144,7 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
                   {profile.googleScholar && (
                     <>
                       {" "}
-                      <a href={profile.googleScholar} target="_blank" rel="noopener noreferrer" className="font-medium text-navy-800 hover:underline">
+                      <a href={profile.googleScholar} target="_blank" rel="noopener noreferrer" className="font-medium text-purple-700 hover:underline">
                         Full record on Google Scholar
                         <span className="sr-only"> (opens in a new tab)</span>
                       </a>
@@ -165,7 +165,7 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
               <h2 id="quals-title" className="eyebrow">Qualifications</h2>
               <ul className="mt-4 space-y-4">
                 {profile.qualifications.map((q) => (
-                  <li key={`${q.degree}-${q.institution}`} className="border-l-2 border-brass pl-4">
+                  <li key={`${q.degree}-${q.institution}`} className="border-l-2 border-purple-400 pl-4">
                     <p className="font-medium text-navy-900">{q.degree}</p>
                     <p className="text-sm text-muted-foreground">
                       {q.institution}
@@ -185,7 +185,7 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
                   <li key={area.id}>
                     <Link
                       href={`/research/?area=${area.slug}`}
-                      className="flex min-h-12 flex-col justify-center border-b border-border py-2 text-[0.9375rem] text-navy-800 hover:text-navy-900"
+                      className="flex min-h-12 flex-col justify-center border-b border-border py-2 text-[0.9375rem] text-purple-700 hover:text-navy-900"
                     >
                       {area.name}
                       <span className="text-xs text-muted-foreground">
@@ -219,7 +219,7 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
               </ul>
               <Link
                 href={`/network/?focus=researcher:${profile.id}`}
-                className="mt-3 inline-flex min-h-10 items-center text-sm font-semibold text-navy-800 hover:underline"
+                className="mt-3 inline-flex min-h-10 items-center text-sm font-semibold text-purple-700 hover:underline"
               >
                 See connections in the network
               </Link>
@@ -243,23 +243,23 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
               <ul className="mt-4 space-y-3 text-[0.9375rem]">
                 {profile.publicEmail && (
                   <li className="flex items-center gap-3">
-                    <Mail className="size-4 shrink-0 text-navy-800" aria-hidden="true" />
-                    <a href={`mailto:${profile.publicEmail}`} className="break-all text-navy-800 hover:underline">
+                    <Mail className="size-4 shrink-0 text-purple-700" aria-hidden="true" />
+                    <a href={`mailto:${profile.publicEmail}`} className="break-all text-purple-700 hover:underline">
                       {profile.publicEmail}
                     </a>
                   </li>
                 )}
                 {profile.publicPhone && (
                   <li className="flex items-center gap-3">
-                    <Phone className="size-4 shrink-0 text-navy-800" aria-hidden="true" />
-                    <a href={`tel:${profile.publicPhone.replace(/\s/g, "")}`} className="text-navy-800 hover:underline">
+                    <Phone className="size-4 shrink-0 text-purple-700" aria-hidden="true" />
+                    <a href={`tel:${profile.publicPhone.replace(/\s/g, "")}`} className="text-purple-700 hover:underline">
                       {profile.publicPhone}
                     </a>
                   </li>
                 )}
                 {profile.office && (
                   <li className="flex items-center gap-3">
-                    <MapPin className="size-4 shrink-0 text-navy-800" aria-hidden="true" />
+                    <MapPin className="size-4 shrink-0 text-purple-700" aria-hidden="true" />
                     {profile.office}
                   </li>
                 )}

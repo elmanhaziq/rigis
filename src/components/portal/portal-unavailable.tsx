@@ -15,7 +15,7 @@ export function PortalUnavailable({ title }: { title: string }) {
       </div>
       <div className="container-page flex flex-1 items-center justify-center py-16">
         <div className="w-full max-w-md border border-border bg-card p-8 sm:p-10">
-          <span className="flex size-11 items-center justify-center rounded-full bg-muted text-navy-800">
+          <span className="flex size-11 items-center justify-center rounded-full bg-muted text-purple-700">
             <LockKeyhole className="size-5" aria-hidden="true" />
           </span>
           <h1 className="mt-6 font-heading text-2xl font-bold">{title}</h1>

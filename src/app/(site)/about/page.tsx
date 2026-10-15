@@ -53,8 +53,8 @@ export default async function AboutPage() {
             ["Mission", site.mission],
           ].map(([title, text]) => (
             <div key={title} className="bg-navy-900 py-16 md:px-10 md:py-20 md:first:pl-0 md:last:pr-0">
-              <p className="eyebrow flex items-center gap-3 text-white/70">
-                <span className="rule-brass" aria-hidden="true" />
+              <p className="eyebrow flex items-center gap-3 text-purple-200">
+                <span className="rule-accent" aria-hidden="true" />
                 Our {title.toLowerCase()}
               </p>
               <h2 className="sr-only">{title}</h2>
@@ -72,7 +72,7 @@ export default async function AboutPage() {
           <ol className="lg:col-span-7 lg:col-start-6">
             {site.objectives.map((o, i) => (
               <li key={o} className="grid grid-cols-[3rem_1fr] gap-4 border-t border-border py-6 last:border-b">
-                <span className="font-heading text-sm font-semibold text-brass-ink tabular-nums">
+                <span className="font-heading text-sm font-semibold text-purple-700 tabular-nums">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <p className="text-[1.0625rem] leading-relaxed">{o}</p>
@@ -100,7 +100,7 @@ export default async function AboutPage() {
           </h2>
           <div className="lg:col-span-7 lg:col-start-6">
             <div className="flex items-start gap-4 border border-border bg-card p-6">
-              <Building2 className="mt-0.5 size-5 shrink-0 text-navy-800" aria-hidden="true" />
+              <Building2 className="mt-0.5 size-5 shrink-0 text-purple-700" aria-hidden="true" />
               <div>
                 <p className="font-heading text-lg font-bold text-navy-900">{site.affiliation}</p>
                 {site.address && <p className="mt-2 text-muted-foreground">{site.address}</p>}

@@ -21,7 +21,7 @@ export function EmptyState({
         className,
       )}
     >
-      <span className="flex size-12 items-center justify-center rounded-full bg-muted text-navy-800">
+      <span className="flex size-12 items-center justify-center rounded-full bg-muted text-purple-700">
         <Icon className="size-5" aria-hidden="true" />
       </span>
       <h3 className="mt-5 font-heading text-lg font-semibold">{title}</h3>
@@ -33,7 +33,7 @@ export function EmptyState({
 
 export function ErrorState({ title = "Something went wrong", description, action }: { title?: string; description?: string; action?: React.ReactNode }) {
   return (
-    <div role="alert" className="border border-destructive/30 bg-[#fdeeed] px-6 py-8 text-center">
+    <div role="alert" className="border border-destructive/30 bg-danger-bg px-6 py-8 text-center">
       <h3 className="font-heading text-lg font-semibold text-destructive">{title}</h3>
       {description && <p className="mt-2 text-[0.9375rem] text-foreground/80">{description}</p>}
       {action && <div className="mt-5">{action}</div>}

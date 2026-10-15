@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- static export: images are pre-compressed WebP, no optimiser available */
 import { cn } from "@/lib/utils";
+import { palette } from "@/config/palette";
 
 function hash(input: string) {
   let h = 2166136261;
@@ -61,12 +62,12 @@ export function ProjectCover({
     >
       <defs>
         <radialGradient id={`g-${h}`} cx={focusX / 200} cy={focusY / 100} r="0.8">
-          <stop offset="0" stopColor="#1D4263" />
-          <stop offset="1" stopColor="#10243A" />
+          <stop offset="0" stopColor={palette.purple900} />
+          <stop offset="1" stopColor={palette.navy900} />
         </radialGradient>
       </defs>
       <rect width="200" height="100" fill={`url(#g-${h})`} />
-      <g stroke="#9AA9B8" strokeOpacity="0.22" strokeWidth="0.4" fill="none">
+      <g stroke={palette.slate} strokeOpacity="0.22" strokeWidth="0.4" fill="none">
         {Array.from({ length: lines }, (_, i) => {
           const y = (i + 1) * (100 / (lines + 1));
           return (
@@ -77,13 +78,13 @@ export function ProjectCover({
           );
         })}
       </g>
-      <g stroke="#B89B68" strokeOpacity="0.6" strokeWidth="0.5">
+      <g stroke={palette.gold} strokeOpacity="0.6" strokeWidth="0.5">
         {nodes.slice(1).map((n, i) => (
           <line key={i} x1={nodes[i]!.x} y1={nodes[i]!.y} x2={n.x} y2={n.y} />
         ))}
       </g>
       {nodes.map((n, i) => (
-        <circle key={i} cx={n.x} cy={n.y} r={i === 0 ? 2.2 : 1.4} fill={i === 0 ? "#B89B68" : "#ffffff"} fillOpacity={i === 0 ? 1 : 0.8} />
+        <circle key={i} cx={n.x} cy={n.y} r={i === 0 ? 2.2 : 1.4} fill={i === 0 ? palette.gold : palette.white} fillOpacity={i === 0 ? 1 : 0.8} />
       ))}
     </svg>
   );

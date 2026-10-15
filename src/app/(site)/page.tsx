@@ -31,8 +31,8 @@ function SceneHeader({
   return (
     <div className="grid gap-6 lg:grid-cols-12 lg:items-end">
       <div className="lg:col-span-7">
-        <p className={`eyebrow flex items-center gap-3 ${inverted ? "text-white/65" : ""}`}>
-          <span className="rule-brass" aria-hidden="true" />
+        <p className={`eyebrow flex items-center gap-3 ${inverted ? "text-purple-200" : ""}`}>
+          <span className="rule-accent" aria-hidden="true" />
           {number} · {eyebrow}
         </p>
         <h2 id={id} className={`mt-4 font-heading text-[2rem] leading-[1.1] font-bold sm:text-[2.75rem] ${inverted ? "text-white" : ""}`}>
@@ -100,16 +100,17 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="network" aria-labelledby="network-title" className="scroll-mt-20 border-t border-border bg-card">
+      <section id="network" aria-labelledby="network-title" className="scroll-mt-20 bg-navy-900 text-white">
         <div className="container-page py-20 lg:py-28">
           <SceneHeader
             id="network-title"
+            inverted
             number="05"
             eyebrow="Research network"
             title="Who works with whom"
             description={`${shared} recent papers were written by two or more RIGIS researchers. The map below is drawn directly from those author lists.`}
             action={
-              <Button asChild className="self-start">
+              <Button asChild className="self-start bg-white text-purple-700 hover:bg-purple-50">
                 <Link href="/network/">
                   <Network data-icon="inline-start" aria-hidden="true" />
                   Explore the full network

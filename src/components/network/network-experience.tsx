@@ -140,7 +140,7 @@ export function NetworkExperience({ data }: { data: PublicDataset }) {
     <NodeInspector graph={graph} data={data} nodeId={selected} onSelect={(id) => select(id)} titleId="inspector-title" />
   ) : (
     <div className="text-[0.9375rem] text-muted-foreground">
-      <MousePointerClick className="size-5 text-navy-800" aria-hidden="true" />
+      <MousePointerClick className="size-5 text-purple-700" aria-hidden="true" />
       <p className="mt-3 font-heading text-lg font-bold text-navy-900">Select anything to inspect it</p>
       <p className="mt-2 leading-relaxed">
         Researchers, papers and research areas show what they are connected to and why. Each connection is a step to the
@@ -170,7 +170,7 @@ export function NetworkExperience({ data }: { data: PublicDataset }) {
               }}
               className={cn(
                 "inline-flex h-10 flex-1 items-center justify-center gap-2 px-4 text-sm font-medium transition-colors",
-                effectiveView === id ? "bg-navy-900 text-white" : "text-muted-foreground hover:text-navy-900",
+                effectiveView === id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-navy-900",
               )}
             >
               <Icon className="size-4" aria-hidden="true" />
@@ -222,7 +222,7 @@ export function NetworkExperience({ data }: { data: PublicDataset }) {
                       }}
                       className="flex min-h-11 w-full items-center gap-3 px-3 py-2 text-left text-sm hover:bg-accent"
                     >
-                      <Icon className="size-4 shrink-0 text-navy-800" aria-hidden="true" />
+                      <Icon className="size-4 shrink-0 text-purple-700" aria-hidden="true" />
                       <span className="line-clamp-1">{n.label}</span>
                       <span className="ml-auto shrink-0 text-xs text-muted-foreground">{kindLabel[n.kind]}</span>
                     </button>
@@ -263,8 +263,8 @@ export function NetworkExperience({ data }: { data: PublicDataset }) {
             <label
               key={value}
               className={cn(
-                "inline-flex min-h-9 cursor-pointer items-center rounded-sm border px-3 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-navy-800",
-                pubs === value ? "border-navy-900 bg-navy-900 text-white" : "border-border bg-card text-navy-900 hover:border-navy-800/40",
+                "inline-flex min-h-9 cursor-pointer items-center rounded-sm border px-3 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-purple-700",
+                pubs === value ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-navy-900 hover:border-purple-400",
               )}
             >
               <input type="radio" name="pubs" value={value} checked={pubs === value} onChange={() => setPubs(value)} className="sr-only" />
@@ -273,7 +273,7 @@ export function NetworkExperience({ data }: { data: PublicDataset }) {
           ))}
         </fieldset>
         <label className="inline-flex min-h-9 items-center gap-2.5">
-          <input type="checkbox" checked={interests} onChange={(e) => setInterests(e.target.checked)} className="size-4 accent-navy-900" />
+          <input type="checkbox" checked={interests} onChange={(e) => setInterests(e.target.checked)} className="size-4 accent-purple-700" />
           Show stated-interest links
         </label>
         <p className="text-muted-foreground" aria-live="polite">
@@ -288,7 +288,7 @@ export function NetworkExperience({ data }: { data: PublicDataset }) {
       <div id="network-view" role="tabpanel" className="mt-6 grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-8">
           {effectiveView === "graph" ? (
-            <div className="relative h-[62dvh] min-h-[420px] overflow-hidden border border-border bg-paper lg:h-[70vh] lg:min-h-[560px]">
+            <div className="relative h-[62dvh] min-h-[420px] overflow-hidden rounded-sm border border-navy-800 bg-navy-900 lg:h-[70vh] lg:min-h-[560px]">
               <NetworkCanvas
                 graph={graph}
                 selectedId={selected}
@@ -304,12 +304,12 @@ export function NetworkExperience({ data }: { data: PublicDataset }) {
           )}
           <Legend />
           {unlinkedAreas.length > 0 && (
-            <p className="mt-4 border-l-2 border-brass pl-4 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-4 border-l-2 border-purple-400 pl-4 text-sm leading-relaxed text-muted-foreground">
               {unlinkedAreas.length} of {data.areas.length} research areas have no connections yet:{" "}
               {unlinkedAreas.map((a, i) => (
                 <span key={a.id}>
                   {i > 0 && ", "}
-                  <Link href={`/research/?area=${a.slug}`} className="text-navy-800 hover:underline">
+                  <Link href={`/research/?area=${a.slug}`} className="text-purple-700 hover:underline">
                     {a.name}
                   </Link>
                 </span>
@@ -367,7 +367,7 @@ function NetworkList({
         return (
           <section key={kind} aria-labelledby={`list-${kind}`}>
             <h2 id={`list-${kind}`} className="flex items-center gap-3 font-heading text-lg font-bold">
-              <Icon className="size-4 text-brass-ink" aria-hidden="true" />
+              <Icon className="size-4 text-purple-700" aria-hidden="true" />
               {kindPlural[kind]}
               <span className="h-px flex-1 bg-border" aria-hidden="true" />
               <span className="text-sm font-medium text-muted-foreground tabular-nums">{items.length}</span>
@@ -381,7 +381,7 @@ function NetworkList({
                     aria-pressed={selectedId === n.id}
                     className={cn(
                       "flex min-h-14 w-full items-center gap-3 rounded-sm border bg-card px-3 py-2.5 text-left transition-colors",
-                      selectedId === n.id ? "border-navy-900 ring-1 ring-navy-900" : "border-border hover:border-navy-800/40",
+                      selectedId === n.id ? "border-purple-700 bg-purple-50 ring-1 ring-purple-700" : "border-border hover:border-purple-400",
                     )}
                   >
                     <span className="min-w-0 flex-1">
@@ -402,12 +402,13 @@ function NetworkList({
 function Legend() {
   return (
     <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-[0.8125rem] text-muted-foreground" aria-label="Legend">
-      <li className="flex items-center gap-2"><span className="size-3 rounded-full border border-navy-900/30 bg-card" aria-hidden="true" />Researcher</li>
+      <li className="flex items-center gap-2"><span className="size-3 rounded-full bg-card ring-2 ring-purple-700" aria-hidden="true" />Researcher</li>
       <li className="flex items-center gap-2"><span className="h-3 w-4 rounded-[2px] border-l-[3px] border-brass bg-card ring-1 ring-border" aria-hidden="true" />Publication</li>
-      <li className="flex items-center gap-2"><span className="h-3 w-4 rounded-[2px] bg-navy-900" aria-hidden="true" />Project</li>
-      <li className="flex items-center gap-2"><span className="size-2.5 rotate-45 bg-brass" aria-hidden="true" />Research area</li>
+      <li className="flex items-center gap-2"><span className="h-3 w-4 rounded-[2px] bg-purple-700" aria-hidden="true" />Project</li>
+      <li className="flex items-center gap-2"><span className="size-2.5 rotate-45 bg-navy-800 ring-1 ring-brass" aria-hidden="true" />Research area (accent per discipline)</li>
       <li className="flex items-center gap-2"><span className="h-px w-5 bg-slate-brand" aria-hidden="true" />Authored (verified)</li>
-      <li className="flex items-center gap-2"><span className="h-0 w-5 border-t border-dashed border-brass" aria-hidden="true" />Stated interest (declared)</li>
+      <li className="flex items-center gap-2"><span className="h-0.5 w-5 bg-purple-200 ring-1 ring-purple-400" aria-hidden="true" />Selected connection</li>
+      <li className="flex items-center gap-2"><span className="h-0 w-5 border-t-2 border-dashed border-purple-400" aria-hidden="true" />Stated interest (declared)</li>
     </ul>
   );
 }

@@ -67,7 +67,7 @@ export function NodeInspector({
         {profile ? (
           <ProfileAvatar name={profile.fullName} photoUrl={profile.photoUrl} className="w-20 shrink-0 border border-border" textClassName="text-lg" />
         ) : (
-          <span className="flex size-12 shrink-0 items-center justify-center rounded-sm bg-navy-900 text-brass">
+          <span className="flex size-12 shrink-0 items-center justify-center rounded-sm bg-purple-700 text-white">
             <Icon className="size-5" aria-hidden="true" />
           </span>
         )}
@@ -94,13 +94,13 @@ export function NodeInspector({
       <div className="flex flex-wrap gap-x-5 gap-y-1">
         {node.kind === "publication" ? (
           node.href && (
-            <a href={node.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-1.5 text-sm font-semibold text-navy-800 hover:underline">
+            <a href={node.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-1.5 text-sm font-semibold text-purple-700 hover:underline">
               Read the paper <ExternalLink className="size-3.5" aria-hidden="true" />
               <span className="sr-only"> (opens in a new tab)</span>
             </a>
           )
         ) : (
-          <Link href={node.href} className="inline-flex min-h-10 items-center gap-1.5 text-sm font-semibold text-navy-800 hover:underline">
+          <Link href={node.href} className="inline-flex min-h-10 items-center gap-1.5 text-sm font-semibold text-purple-700 hover:underline">
             {node.kind === "researcher" ? "Open full profile" : node.kind === "project" ? "Open project" : "Explore this area"}
             <ArrowUpRight className="size-3.5" aria-hidden="true" />
           </Link>
@@ -116,7 +116,7 @@ export function NodeInspector({
               <span
                 className={cn(
                   "rounded-sm px-1.5 py-0.5 text-[0.6875rem] font-semibold tracking-wide uppercase",
-                  verified[kind] ? "bg-[#ecf6f0] text-success" : "bg-muted text-muted-foreground",
+                  verified[kind] ? "bg-success-bg text-success" : "bg-muted text-muted-foreground",
                 )}
               >
                 {verified[kind] ? "Verified" : "Declared"}
@@ -134,7 +134,7 @@ export function NodeInspector({
                       onClick={() => onSelect(id)}
                       className="flex min-h-11 w-full items-start gap-3 rounded-sm px-2 py-2 text-left transition-colors hover:bg-accent focus-visible:bg-accent"
                     >
-                      <OtherIcon className="mt-0.5 size-4 shrink-0 text-navy-800" aria-hidden="true" />
+                      <OtherIcon className="mt-0.5 size-4 shrink-0 text-purple-700" aria-hidden="true" />
                       <span className="min-w-0">
                         <span className="block text-sm leading-snug font-medium text-navy-900">{other.label}</span>
                         {label && <span className="block text-xs text-muted-foreground">{kind === "interest" ? `Interest: ${label}` : label}</span>}

@@ -57,7 +57,7 @@ export function ProjectView({ project, data }: { project: ResearchProject; data:
                 <div>
                   <dt className="eyebrow">Principal investigator</dt>
                   <dd className="mt-1.5">
-                    <Link href={profileHref(pi.slug)} className="font-semibold text-navy-800 hover:underline">
+                    <Link href={profileHref(pi.slug)} className="font-semibold text-purple-700 hover:underline">
                       {displayName(pi)}
                     </Link>
                   </dd>
@@ -77,7 +77,7 @@ export function ProjectView({ project, data }: { project: ResearchProject; data:
                       <Link
                         key={a.id}
                         href={`/research/?area=${a.slug}`}
-                        className="rounded-sm border border-border bg-card px-2.5 py-1 text-sm text-navy-900 hover:border-navy-800/40"
+                        className="rounded-sm border border-border bg-card px-2.5 py-1 text-sm text-navy-900 hover:border-purple-400"
                       >
                         {a.name}
                       </Link>
@@ -180,9 +180,9 @@ export function ProjectView({ project, data }: { project: ResearchProject; data:
                       href={d.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex min-h-12 items-center gap-3 border border-border bg-card px-4 py-2 hover:border-navy-800/40"
+                      className="flex min-h-12 items-center gap-3 border border-border bg-card px-4 py-2 hover:border-purple-400"
                     >
-                      <FileText className="size-4 shrink-0 text-navy-800" aria-hidden="true" />
+                      <FileText className="size-4 shrink-0 text-purple-700" aria-hidden="true" />
                       <span className="min-w-0 flex-1 truncate text-sm font-medium">{d.title}</span>
                       {d.sizeBytes && <span className="text-xs text-muted-foreground">{formatBytes(d.sizeBytes)}</span>}
                       <Download className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />

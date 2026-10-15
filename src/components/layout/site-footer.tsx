@@ -5,7 +5,7 @@ import { mainNav, siteConfig } from "@/config/site";
 export function SiteFooter() {
   const year = new Date().getFullYear();
   return (
-    <footer className="mt-auto bg-navy-950 text-white/75">
+    <footer className="mt-auto bg-navy-900 text-white/75">
       <div className="container-page grid gap-12 py-16 md:grid-cols-12">
         <div className="md:col-span-5">
           <Logo inverted />

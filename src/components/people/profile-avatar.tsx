@@ -30,21 +30,21 @@ export function ProfileAvatar({
       role="img"
       aria-label={`${name} (no photograph)`}
       className={cn(
-        "relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden bg-[#e4e9ef]",
-        "bg-[image:repeating-linear-gradient(135deg,transparent_0_11px,rgba(16,36,58,0.035)_11px_12px)]",
+        "relative flex aspect-[4/5] w-full items-center justify-center overflow-hidden bg-muted",
+        "bg-[image:repeating-linear-gradient(135deg,transparent_0_11px,rgba(75,33,109,0.04)_11px_12px)]",
         className,
       )}
     >
       <span
         className={cn(
-          "font-heading text-[clamp(1.75rem,6vw,3rem)] font-extrabold tracking-[0.04em] text-navy-800/80",
+          "font-heading text-[clamp(1.75rem,6vw,3rem)] font-extrabold tracking-[0.04em] text-purple-700/80",
           textClassName,
         )}
         aria-hidden="true"
       >
         {initials(name)}
       </span>
-      <span className="absolute bottom-0 left-0 h-[3px] w-10 bg-brass" aria-hidden="true" />
+      <span className="absolute bottom-0 left-0 h-[3px] w-10 bg-purple-400" aria-hidden="true" />
     </div>
   );
 }

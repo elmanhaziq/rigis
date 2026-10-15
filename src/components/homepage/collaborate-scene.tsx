@@ -36,12 +36,12 @@ export function CollaborateScene({ data }: { data: PublicDataset }) {
   const { site } = data;
   const news = data.announcements.slice(0, 2);
   return (
-    <section id="collaborate" aria-labelledby="collaborate-title" className="scroll-mt-20 bg-navy-950 text-white">
+    <section id="collaborate" aria-labelledby="collaborate-title" className="scroll-mt-20 bg-purple-700 text-white">
       <div className="container-page py-20 lg:py-28">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <p className="eyebrow flex items-center gap-3 text-white/65">
-              <span className="rule-brass" aria-hidden="true" />
+            <p className="eyebrow flex items-center gap-3 text-purple-200">
+              <span className="rule-accent" aria-hidden="true" />
               06 · Work with us
             </p>
             <h2 id="collaborate-title" className="mt-5 font-heading text-[2.25rem] leading-[1.08] font-extrabold text-white sm:text-5xl lg:text-[3.5rem]">
@@ -58,10 +58,10 @@ export function CollaborateScene({ data }: { data: PublicDataset }) {
 
         <ul className="mt-14 grid gap-px overflow-hidden border border-white/12 bg-white/12 sm:grid-cols-2 lg:grid-cols-4">
           {pathways.map(({ type, icon: Icon, title, text }) => (
-            <li key={type} className="bg-navy-950">
+            <li key={type} className="bg-purple-700">
               <Link
                 href={`/contact/?type=${type}`}
-                className="group flex h-full flex-col p-6 transition-colors duration-200 hover:bg-navy-900 focus-visible:bg-navy-900 sm:p-7"
+                className="group flex h-full flex-col p-6 transition-colors duration-200 hover:bg-purple-800 focus-visible:bg-purple-800 sm:p-7"
               >
                 <Icon className="size-6 text-brass" aria-hidden="true" />
                 <span className="mt-6 font-heading text-lg font-bold text-white">{title}</span>
@@ -77,7 +77,7 @@ export function CollaborateScene({ data }: { data: PublicDataset }) {
 
         <div className="mt-14 grid gap-10 border-t border-white/12 pt-10 lg:grid-cols-12">
           <div className="lg:col-span-5">
-            <h3 className="eyebrow text-white/65">Contact</h3>
+            <h3 className="eyebrow text-purple-200">Contact</h3>
             <p className="mt-3 flex items-center gap-3 text-[0.9375rem] text-white/85">
               <Mail className="size-4 text-brass" aria-hidden="true" />
               {site.contactEmail ? (
@@ -90,7 +90,7 @@ export function CollaborateScene({ data }: { data: PublicDataset }) {
           </div>
           {news.length > 0 && (
             <div className="lg:col-span-7">
-              <h3 className="eyebrow text-white/65">Latest from the group</h3>
+              <h3 className="eyebrow text-purple-200">Latest from the group</h3>
               <ul className="mt-3 divide-y divide-white/12">
                 {news.map((a) => (
                   <li key={a.id} className="flex flex-col gap-1 py-3 sm:flex-row sm:items-baseline sm:gap-6">
