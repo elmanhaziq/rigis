@@ -1,7 +1,9 @@
 import type { PublicDataset } from "@/lib/data";
+import type { ContentStatus } from "@/types/domain";
 import { displayName, initials } from "@/lib/data/selectors";
+import { areasForInterest, memberAuthors } from "@/lib/data/relationships";
 
-export type NetworkNodeKind = "researcher" | "project" | "area";
+export type NetworkNodeKind = "researcher" | "project" | "area" | "publication";
 
 export type NetworkNode = {
   id: string;
@@ -10,147 +12,229 @@ export type NetworkNode = {
   sublabel: string | null;
   /** Two-letter monogram for researcher nodes. */
   monogram: string | null;
+  photoUrl: string | null;
+  /** Internal page, or the external source for publications ("" if none). */
   href: string;
-  /** Underlying record id (profile/project/area id). */
+  /** Underlying record id (profile/project/area/publication id). */
   refId: string;
+  status: ContentStatus;
 };
+
+/**
+ * - participates  researcher -> project      verified (approved project team)
+ * - belongs       project -> area            verified (approved project tags)
+ * - authored      researcher -> publication  verified (published authorship)
+ * - interest      researcher -> area         declared (the researcher's own stated interest)
+ */
+export type NetworkEdgeKind = "participates" | "belongs" | "authored" | "interest";
 
 export interface NetworkEdge {
   id: string;
   source: string;
   target: string;
-  kind: "participates" | "belongs" | "contributes";
+  kind: NetworkEdgeKind;
   label?: string;
 }
 
 export interface NetworkGraph {
   nodes: NetworkNode[];
   edges: NetworkEdge[];
-  /** Adjacency over all edge kinds, for highlighting. */
   neighbours: Map<string, Set<string>>;
+  byId: Map<string, NetworkNode>;
 }
 
-const nid = (kind: NetworkNodeKind, id: string) => `${kind}:${id}`;
+export type PublicationMode = "shared" | "all" | "none";
+
+export interface GraphOptions {
+  /** "shared" shows only papers co-authored by two or more members. */
+  publications: PublicationMode;
+  /** Include declared-interest links between researchers and areas. */
+  interests: boolean;
+}
+
+export const defaultGraphOptions: GraphOptions = { publications: "shared", interests: true };
+
+export const nid = (kind: NetworkNodeKind, id: string) => `${kind}:${id}`;
+
+export const kindLabel: Record<NetworkNodeKind, string> = {
+  researcher: "Researcher",
+  project: "Project",
+  area: "Research area",
+  publication: "Publication",
+};
+
+export const edgeKindLabel: Record<NetworkEdgeKind, string> = {
+  participates: "Works on project",
+  belongs: "Project in research area",
+  authored: "Co-authored publication",
+  interest: "Stated research interest",
+};
 
 /**
- * Builds the collaboration graph strictly from published records:
- * - researcher → project when the researcher is the PI or a listed member
- * - project → area when the project is tagged with that area
- * - researcher → area (derived) only through such verified participation
- * Records referenced but not present in the public dataset are ignored, so
- * unpublished people or projects can never leak into the graph.
+ * Builds the network strictly from published records. Records referenced but
+ * absent from the public dataset are skipped, so unpublished people or
+ * projects can never appear. Researchers appear once they have a connection.
  */
-export function buildNetworkGraph(data: PublicDataset): NetworkGraph {
+export function buildNetworkGraph(data: PublicDataset, options: GraphOptions = defaultGraphOptions): NetworkGraph {
   const profiles = new Map(data.profiles.map((p) => [p.id, p]));
   const areas = new Map(data.areas.map((a) => [a.id, a]));
-  const nodes: NetworkNode[] = [];
+  const nodes = new Map<string, NetworkNode>();
   const edges: NetworkEdge[] = [];
-  const used = new Set<string>();
 
-  const contributes = new Map<string, Set<string>>(); // researcherId -> areaIds
+  const addResearcher = (id: string) => {
+    const p = profiles.get(id);
+    if (!p) return null;
+    const key = nid("researcher", id);
+    if (!nodes.has(key)) {
+      nodes.set(key, {
+        id: key,
+        kind: "researcher",
+        label: displayName(p),
+        sublabel: p.position,
+        monogram: initials(p.fullName),
+        photoUrl: p.photoUrl,
+        href: `/people/${p.slug}/`,
+        refId: p.id,
+        status: p.isDemo ? "demo" : "verified",
+      });
+    }
+    return key;
+  };
+  const addArea = (id: string) => {
+    const a = areas.get(id);
+    if (!a) return null;
+    const key = nid("area", id);
+    if (!nodes.has(key)) {
+      nodes.set(key, {
+        id: key,
+        kind: "area",
+        label: a.name,
+        sublabel: null,
+        monogram: null,
+        photoUrl: null,
+        href: `/research/?area=${a.slug}`,
+        refId: a.id,
+        status: a.status,
+      });
+    }
+    return key;
+  };
 
   for (const project of data.projects) {
-    const pNode = nid("project", project.id);
-    nodes.push({
-      id: pNode,
+    const pKey = nid("project", project.id);
+    nodes.set(pKey, {
+      id: pKey,
       kind: "project",
       label: project.title,
       sublabel: project.status[0]!.toUpperCase() + project.status.slice(1),
       monogram: null,
+      photoUrl: null,
       href: `/research/${project.slug}/`,
       refId: project.id,
+      status: project.isDemo ? "demo" : "verified",
     });
-
-    const memberRoles = new Map<string, string>();
-    if (project.principalInvestigatorId) memberRoles.set(project.principalInvestigatorId, "Principal investigator");
-    for (const m of project.members) if (!memberRoles.has(m.profileId)) memberRoles.set(m.profileId, m.projectRole);
-
-    const projectAreaIds = project.areaIds.filter((id) => areas.has(id));
-    for (const areaId of projectAreaIds) {
-      edges.push({ id: `${pNode}->area:${areaId}`, source: pNode, target: nid("area", areaId), kind: "belongs" });
-      used.add(nid("area", areaId));
+    for (const areaId of project.areaIds) {
+      const aKey = addArea(areaId);
+      if (aKey) edges.push({ id: `${pKey}>${aKey}`, source: pKey, target: aKey, kind: "belongs" });
     }
-
-    for (const [profileId, role] of memberRoles) {
-      if (!profiles.has(profileId)) continue;
-      const rNode = nid("researcher", profileId);
-      used.add(rNode);
-      edges.push({ id: `${rNode}->${pNode}`, source: rNode, target: pNode, kind: "participates", label: role });
-      const set = contributes.get(profileId) ?? new Set<string>();
-      projectAreaIds.forEach((a) => set.add(a));
-      contributes.set(profileId, set);
+    const roles = new Map<string, string>();
+    if (project.principalInvestigatorId) roles.set(project.principalInvestigatorId, "Principal investigator");
+    for (const m of project.members) if (!roles.has(m.profileId)) roles.set(m.profileId, m.projectRole);
+    for (const [profileId, role] of roles) {
+      const rKey = addResearcher(profileId);
+      if (rKey) edges.push({ id: `${rKey}>${pKey}`, source: rKey, target: pKey, kind: "participates", label: role });
     }
   }
 
-  for (const profile of data.profiles) {
-    const id = nid("researcher", profile.id);
-    if (!used.has(id)) continue; // only researchers with verified project participation
-    nodes.push({
-      id,
-      kind: "researcher",
-      label: displayName(profile),
-      sublabel: profile.position,
-      monogram: initials(profile.fullName),
-      href: `/people/${profile.slug}/`,
-      refId: profile.id,
-    });
-  }
-  for (const area of data.areas) {
-    const id = nid("area", area.id);
-    if (!used.has(id)) continue;
-    nodes.push({ id, kind: "area", label: area.name, sublabel: null, monogram: null, href: `/research/?area=${area.slug}`, refId: area.id });
-  }
-
-  for (const [profileId, areaIds] of contributes) {
-    for (const areaId of areaIds) {
-      edges.push({
-        id: `researcher:${profileId}~area:${areaId}`,
-        source: nid("researcher", profileId),
-        target: nid("area", areaId),
-        kind: "contributes",
+  if (options.publications !== "none") {
+    for (const pub of data.publications) {
+      const authors = memberAuthors(pub, data);
+      if (authors.length === 0) continue;
+      if (options.publications === "shared" && authors.length < 2) continue;
+      const key = nid("publication", pub.id);
+      nodes.set(key, {
+        id: key,
+        kind: "publication",
+        label: pub.title,
+        sublabel: pub.year ? String(pub.year) : null,
+        monogram: null,
+        photoUrl: null,
+        href: pub.doi ? `https://doi.org/${pub.doi}` : (pub.url ?? ""),
+        refId: pub.id,
+        status: pub.isDemo ? "demo" : "verified",
       });
+      for (const author of authors) {
+        const rKey = addResearcher(author.id)!;
+        edges.push({ id: `${rKey}>${key}`, source: rKey, target: key, kind: "authored" });
+      }
+    }
+  }
+
+  if (options.interests) {
+    for (const profile of data.profiles) {
+      const matched = new Map<string, string[]>();
+      for (const interest of profile.researchInterests) {
+        for (const area of areasForInterest(data.areas, interest)) {
+          matched.set(area.id, [...(matched.get(area.id) ?? []), interest]);
+        }
+      }
+      for (const [areaId, interests] of matched) {
+        const rKey = addResearcher(profile.id)!;
+        const aKey = addArea(areaId)!;
+        edges.push({ id: `${rKey}~${aKey}`, source: rKey, target: aKey, kind: "interest", label: interests.join(", ") });
+      }
     }
   }
 
   const neighbours = new Map<string, Set<string>>();
-  for (const n of nodes) neighbours.set(n.id, new Set());
+  for (const n of nodes.keys()) neighbours.set(n, new Set());
   for (const e of edges) {
     neighbours.get(e.source)?.add(e.target);
     neighbours.get(e.target)?.add(e.source);
   }
+  return { nodes: [...nodes.values()], edges, neighbours, byId: nodes };
+}
 
-  return { nodes, edges, neighbours };
+/** A node, its direct neighbours, and areas a researcher reaches via projects. */
+export function relatedIds(graph: NetworkGraph, id: string): Set<string> {
+  const set = new Set([id, ...(graph.neighbours.get(id) ?? [])]);
+  if (id.startsWith("researcher:")) {
+    for (const n of graph.neighbours.get(id) ?? []) {
+      if (!n.startsWith("project:")) continue;
+      for (const m of graph.neighbours.get(n) ?? []) if (m.startsWith("area:")) set.add(m);
+    }
+  }
+  return set;
+}
+
+/** Edges touching a node. */
+export function edgesOf(graph: NetworkGraph, id: string) {
+  return graph.edges.filter((e) => e.source === id || e.target === id);
 }
 
 /**
- * Three-column layered layout (researchers | projects | areas). Rows are
- * ordered by the barycentre of each node's neighbours to reduce crossings.
+ * Three-column layered layout: areas | researchers | work (projects, then
+ * publications). Researchers sit in the middle because they connect both
+ * sides; outer columns are ordered by the average row of their researchers to
+ * reduce crossings, and shorter columns are spread over the tallest one.
  */
-export function layoutNetwork(graph: NetworkGraph, opts = { colGap: 380, rowGap: 84 }) {
-  const byKind = (k: NetworkNodeKind) => graph.nodes.filter((n) => n.kind === k);
-  const areas = byKind("area");
-  const projects = byKind("project");
-  const researchers = byKind("researcher");
-  const order = new Map<string, number>();
-  areas.forEach((n, i) => order.set(n.id, i));
+export function layoutNetwork(graph: NetworkGraph, opts = { colGap: 380, rowGap: 96 }) {
+  const of = (k: NetworkNodeKind) => graph.nodes.filter((n) => n.kind === k);
+  const researchers = of("researcher").sort((a, b) => a.label.localeCompare(b.label));
+  const order = new Map(researchers.map((n, i) => [n.id, i] as const));
 
-  const bary = (n: NetworkNode, kinds: NetworkNodeKind[]) => {
-    const ns = [...(graph.neighbours.get(n.id) ?? [])].filter((id) => kinds.includes(id.split(":")[0] as NetworkNodeKind) && order.has(id));
+  const bary = (n: NetworkNode) => {
+    const ns = [...(graph.neighbours.get(n.id) ?? [])].filter((id) => order.has(id));
     return ns.length ? ns.reduce((s, id) => s + order.get(id)!, 0) / ns.length : Number.MAX_SAFE_INTEGER;
   };
+  const sortBy = (list: NetworkNode[]) => [...list].sort((a, b) => bary(a) - bary(b) || a.label.localeCompare(b.label));
 
-  const projectsSorted = [...projects].sort((a, b) => bary(a, ["area"]) - bary(b, ["area"]));
-  const areaScale = projects.length / Math.max(areas.length, 1);
-  areas.forEach((n, i) => order.set(n.id, i * areaScale));
-  projectsSorted.forEach((n, i) => order.set(n.id, i));
-  const researchersSorted = [...researchers].sort((a, b) => bary(a, ["project"]) - bary(b, ["project"]));
-
-  const columns = [researchersSorted, projectsSorted, areas];
-  const maxRows = Math.max(...columns.map((c) => c.length), 1);
+  const columns = [sortBy(of("area")), researchers, [...sortBy(of("project")), ...sortBy(of("publication"))]];
+  const height = Math.max(...columns.map((c) => c.length), 1) * opts.rowGap;
   const positions = new Map<string, { x: number; y: number }>();
   columns.forEach((col, ci) => {
-    const offset = ((maxRows - col.length) * opts.rowGap) / 2;
-    col.forEach((n, ri) => positions.set(n.id, { x: ci * opts.colGap, y: offset + ri * opts.rowGap }));
+    const step = height / Math.max(col.length, 1);
+    col.forEach((n, ri) => positions.set(n.id, { x: ci * opts.colGap, y: (ri + 0.5) * step }));
   });
   return positions;
 }

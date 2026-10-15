@@ -77,6 +77,40 @@ public/branding        favicon, Open Graph image
 scripts/               build helpers
 ```
 
+### Interactive experience
+
+The homepage tells the RIGIS story in six scenes (`src/components/homepage`):
+**Enter** (`story-hero`, `hero-constellation`) → **Understand** (`identity-scene`)
+→ **Research** (`research/area-explorer`) → **People**
+(`people/researcher-explorer`, `researcher-panel`) → **Network**
+(`collaboration-map`) → **Collaborate** (`collaborate-scene`), with a chapter
+rail on desktop and a "Chapters" bottom sheet on mobile (`scene-nav`).
+
+The `/network` page (`network/network-experience`) offers a React Flow graph
+(lazy-loaded, desktop default) and a searchable list (mobile default). Both
+use the same inspector (`node-inspector`), where every connection is a step
+to the next item. On desktop the inspector sits beside the content; on
+mobile it opens as a bottom sheet.
+
+Components talk to each other through small window events (`src/lib/events.ts`):
+for example, choosing a research interest in a researcher panel selects that
+area in the research explorer.
+
+**Data integrity.** Relationships are computed in
+`src/lib/data/relationships.ts` and `src/lib/network/graph.ts`, and every
+link carries its basis:
+
+| Link | Basis | Shown as |
+| --- | --- | --- |
+| Researcher – publication | author lists | Verified |
+| Researcher – project, project – area | approved project records | Verified |
+| Researcher – research area | the researcher's own listed interests, matched via `interestKeywords` in `src/lib/data/areas.ts` | Declared ("stated interest"), dashed |
+
+Nothing is inferred beyond these rules. Content status is explicit:
+`verified`, `provisional` (supplied by RIGIS, awaiting confirmation; e.g.
+research-area descriptions) and `demo` (placeholders, e.g. About text and
+announcements).
+
 ### Design system
 
 Tokens are in `src/app/globals.css`: navy `#10243A` / `#1D4263`, paper

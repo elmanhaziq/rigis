@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { getPublicDataset } from "@/lib/data";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { NetworkExplorer } from "@/components/network/network-explorer";
+import { NetworkExperience } from "@/components/network/network-experience";
 
 export const metadata: Metadata = {
   title: "Research Network",
@@ -20,14 +20,14 @@ export default async function NetworkPage() {
             as="h1"
             eyebrow="Research network"
             title="How our research connects"
-            description="Researchers are linked to the projects they work on, and projects to their research areas. Every connection comes from an approved project record — none are inferred or added by hand."
+            description="Researchers, the papers they write together, their projects and research areas. Verified links come from author lists and approved project records; dashed links show interests researchers list themselves."
             align="split"
           />
         </div>
       </header>
       <div className="container-page py-10 lg:py-14">
         <Suspense>
-          <NetworkExplorer data={data} />
+          <NetworkExperience data={data} />
         </Suspense>
       </div>
     </>

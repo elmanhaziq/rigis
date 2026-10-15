@@ -4,13 +4,13 @@ import type { PublicProfile } from "@/types/domain";
 import type { PublicDataset } from "@/lib/data";
 import {
   areaMap,
-  areasForProfile,
   displayName,
   profileMap,
   projectsForProfile,
   publicationsForProfile,
 } from "@/lib/data/selectors";
 import { ProfileAvatar } from "./profile-avatar";
+import { areaLinksForProfile, areasForInterest, collaboratorsFor } from "@/lib/data/relationships";
 import { ProjectCard } from "@/components/research/project-card";
 import { PublicationList } from "@/components/research/publication-list";
 import { DemoTag } from "@/components/layout/demo-banner";
@@ -36,7 +36,8 @@ function ExternalProfileLink({ href, label }: { href: string; label: string }) {
 export function ProfileView({ profile, data }: { profile: PublicProfile; data: PublicDataset }) {
   const projects = projectsForProfile(data, profile.id);
   const publications = publicationsForProfile(data, profile.id);
-  const areas = areasForProfile(data, profile.id);
+  const areaLinks = areaLinksForProfile(data, profile);
+  const collaborators = collaboratorsFor(data, profile.id);
   const people = profileMap(data);
   const areaById = areaMap(data);
   const orcidUrl = profile.orcid
@@ -75,11 +76,24 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
               {profile.position && <p className="mt-3 text-xl text-muted-foreground">{profile.position}</p>}
               {profile.researchInterests.length > 0 && (
                 <ul className="mt-6 flex flex-wrap gap-2" aria-label="Research interests">
-                  {profile.researchInterests.map((i) => (
-                    <li key={i} className="rounded-sm border border-border bg-card px-3 py-1.5 text-sm text-navy-900">
-                      {i}
-                    </li>
-                  ))}
+                  {profile.researchInterests.map((i) => {
+                    const area = areasForInterest(data.areas, i)[0];
+                    return (
+                      <li key={i}>
+                        {area ? (
+                          <Link
+                            href={`/research/?area=${area.slug}`}
+                            title={`Explore ${area.name}`}
+                            className="inline-flex min-h-9 items-center rounded-sm border border-navy-800/30 bg-card px-3 text-sm text-navy-900 transition-colors hover:border-navy-800 hover:bg-accent"
+                          >
+                            {i}
+                          </Link>
+                        ) : (
+                          <span className="inline-flex min-h-9 items-center rounded-sm border border-border bg-card px-3 text-sm text-navy-900">{i}</span>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </div>
@@ -163,22 +177,52 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
             </section>
           )}
 
-          {areas.length > 0 && (
+          {areaLinks.length > 0 && (
             <section aria-labelledby="areas-title">
               <h2 id="areas-title" className="eyebrow">Research areas</h2>
-              <p className="mt-2 text-xs text-muted-foreground">Derived from published project participation.</p>
               <ul className="mt-3">
-                {areas.map((a) => (
-                  <li key={a.id}>
+                {areaLinks.map(({ area, basis, matchedInterests }) => (
+                  <li key={area.id}>
                     <Link
-                      href={`/research/?area=${a.slug}`}
-                      className="flex min-h-11 items-center border-b border-border text-[0.9375rem] text-navy-800 hover:text-navy-900"
+                      href={`/research/?area=${area.slug}`}
+                      className="flex min-h-12 flex-col justify-center border-b border-border py-2 text-[0.9375rem] text-navy-800 hover:text-navy-900"
                     >
-                      {a.name}
+                      {area.name}
+                      <span className="text-xs text-muted-foreground">
+                        {basis === "project" ? "Through approved projects" : `Stated interest: ${matchedInterests.join(", ")}`}
+                      </span>
                     </Link>
                   </li>
                 ))}
               </ul>
+            </section>
+          )}
+
+          {collaborators.length > 0 && (
+            <section aria-labelledby="collab-title">
+              <h2 id="collab-title" className="eyebrow">Works with in RIGIS</h2>
+              <p className="mt-2 text-xs text-muted-foreground">Co-authors on the publications listed here.</p>
+              <ul className="mt-3">
+                {collaborators.map(({ profile: c, sharedPublications }) => (
+                  <li key={c.id}>
+                    <Link href={`/people/${c.slug}/`} className="group flex min-h-14 items-center gap-3 border-b border-border py-2">
+                      <ProfileAvatar name={c.fullName} photoUrl={c.photoUrl} className="aspect-square w-10 shrink-0" textClassName="text-xs" />
+                      <span className="min-w-0">
+                        <span className="block truncate text-[0.9375rem] font-semibold text-navy-900 group-hover:underline">{displayName(c)}</span>
+                        <span className="block text-xs text-muted-foreground">
+                          {sharedPublications} shared {sharedPublications === 1 ? "paper" : "papers"}
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href={`/network/?focus=researcher:${profile.id}`}
+                className="mt-3 inline-flex min-h-10 items-center text-sm font-semibold text-navy-800 hover:underline"
+              >
+                See connections in the network
+              </Link>
             </section>
           )}
 

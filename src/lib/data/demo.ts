@@ -1,5 +1,5 @@
 /**
- * DEMONSTRATION CONTENT ONLY (research areas, announcements, About text).
+ * DEMONSTRATION CONTENT ONLY (announcements and About-page text).
  *
  * Every record here is fictional and flagged with isDemo: true so the UI can
  * label it. None of these people, projects or publications exist. This source
@@ -9,7 +9,6 @@
 import type {
   Announcement,
   Collaboration,
-  ResearchArea,
   SiteContent,
 } from "@/types/domain";
 
@@ -40,56 +39,6 @@ export const demoSiteContent: SiteContent = {
   address: null,
 };
 
-export const demoAreas: ResearchArea[] = [
-  {
-    ...demo,
-    id: "area-ml",
-    slug: "machine-learning",
-    name: "Machine Learning & Data Analytics",
-    description:
-      "Learning algorithms, predictive modelling and the analysis of complex, real-world datasets.",
-  },
-  {
-    ...demo,
-    id: "area-cv",
-    slug: "computer-vision",
-    name: "Computer Vision & Imaging",
-    description:
-      "Image understanding, object recognition and visual analysis for scientific and applied settings.",
-  },
-  {
-    ...demo,
-    id: "area-nlp",
-    slug: "natural-language-processing",
-    name: "Natural Language Processing",
-    description:
-      "Computational methods for understanding, generating and analysing human language.",
-  },
-  {
-    ...demo,
-    id: "area-dss",
-    slug: "decision-support",
-    name: "Intelligent Decision Support",
-    description:
-      "Optimisation, reasoning and recommender systems that help people make better decisions.",
-  },
-  {
-    ...demo,
-    id: "area-iot",
-    slug: "iot-embedded-intelligence",
-    name: "IoT & Embedded Intelligence",
-    description:
-      "Sensing, edge computing and intelligent behaviour in connected and embedded devices.",
-  },
-  {
-    ...demo,
-    id: "area-rai",
-    slug: "responsible-ai",
-    name: "Responsible & Explainable AI",
-    description:
-      "Transparency, fairness, accountability and human-centred evaluation of intelligent systems.",
-  },
-];
 
 export const demoAnnouncements: Announcement[] = [
   {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AlertCircle, CheckCircle2, ChevronDown, Loader2, Send } from "lucide-react";
 import { Field } from "./field";
 import { Input } from "@/components/ui/input";
@@ -18,6 +18,13 @@ export function ContactForm() {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   // Time of first interaction, used as a simple bot heuristic.
   const startedAt = useRef(0);
+  const typeRef = useRef<HTMLSelectElement>(null);
+
+  // Pre-select the enquiry type when arriving from a "Work with us" pathway (?type=).
+  useEffect(() => {
+    const type = new URLSearchParams(window.location.search).get("type");
+    if (type && typeRef.current && enquiryTypes.some((t) => t.value === type)) typeRef.current.value = type;
+  }, []);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -102,6 +109,7 @@ export function ContactForm() {
           <div className="relative">
           <select
             {...p}
+            ref={typeRef}
             name="enquiryType"
             defaultValue=""
             className="h-10 w-full appearance-none rounded-md border border-input bg-card pr-9 pl-3 text-sm focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none aria-invalid:border-destructive"

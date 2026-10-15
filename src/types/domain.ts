@@ -50,11 +50,26 @@ export interface PublicProfile {
   isDemo: boolean;
 }
 
+/**
+ * Editorial status of a record, so the UI can distinguish verified RIGIS
+ * information from content that is provisional or purely demonstrative.
+ */
+export type ContentStatus = "verified" | "provisional" | "demo";
+
 export interface ResearchArea {
   id: string;
   slug: string;
   name: string;
+  /** Compact label for dense visualisations. */
+  shortName: string;
   description: string | null;
+  /**
+   * Terms used to connect a researcher's self-declared research interests to
+   * this area. These links are labelled "stated interest" in the UI and are
+   * never presented as verified research activity.
+   */
+  interestKeywords: string[];
+  status: ContentStatus;
   isDemo: boolean;
 }
 

@@ -3,7 +3,8 @@ import { z } from "zod";
 export const enquiryTypes = [
   { value: "collaboration", label: "Research collaboration" },
   { value: "research", label: "Research enquiry" },
-  { value: "postgraduate", label: "Postgraduate study / supervision" },
+  { value: "partnership", label: "Academic partnership" },
+  { value: "postgraduate", label: "Student involvement / postgraduate study" },
   { value: "industry", label: "Industry partnership" },
   { value: "other", label: "Other" },
 ] as const;

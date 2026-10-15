@@ -18,11 +18,11 @@ import type {
 } from "@/types/domain";
 import {
   demoAnnouncements,
-  demoAreas,
   demoSiteContent,
 } from "./demo";
 import { memberProfiles, memberPublications } from "./members";
 import { projects } from "./projects";
+import { researchAreas } from "./areas";
 
 const profiles = memberProfiles;
 const publications = memberPublications;
@@ -40,7 +40,7 @@ export async function getPublicDataset(): Promise<PublicDataset> {
   return {
     profiles,
     projects,
-    areas: demoAreas,
+    areas: researchAreas,
     publications,
     announcements: [...demoAnnouncements].sort((a, b) =>
       b.publishedAt.localeCompare(a.publishedAt),
