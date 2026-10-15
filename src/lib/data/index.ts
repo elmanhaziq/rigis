@@ -24,6 +24,10 @@ import {
   demoPublications,
   demoSiteContent,
 } from "./demo";
+import { memberProfiles, memberPublications } from "./members";
+
+const profiles = [...memberProfiles, ...demoProfiles];
+const publications = [...memberPublications, ...demoPublications];
 
 export interface PublicDataset {
   profiles: PublicProfile[];
@@ -36,10 +40,10 @@ export interface PublicDataset {
 
 export async function getPublicDataset(): Promise<PublicDataset> {
   return {
-    profiles: demoProfiles,
+    profiles,
     projects: demoProjects,
     areas: demoAreas,
-    publications: demoPublications,
+    publications,
     announcements: [...demoAnnouncements].sort((a, b) =>
       b.publishedAt.localeCompare(a.publishedAt),
     ),
@@ -48,7 +52,7 @@ export async function getPublicDataset(): Promise<PublicDataset> {
 }
 
 export async function getProfileSlugs(): Promise<string[]> {
-  return demoProfiles.map((p) => p.slug);
+  return profiles.map((p) => p.slug);
 }
 
 export async function getProjectSlugs(): Promise<string[]> {

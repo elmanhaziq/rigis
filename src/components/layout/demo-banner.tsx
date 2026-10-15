@@ -8,8 +8,8 @@ export function DemoBanner() {
         <Info className="mt-0.5 size-4 shrink-0 text-brass sm:mt-0" aria-hidden="true" />
         <p>
           <span className="font-semibold text-brass">Demonstration content.</span>{" "}
-          People, projects and publications shown here are fictional placeholders until real
-          RIGIS information is added.
+          Items marked &ldquo;Demo&rdquo; are fictional placeholders until real RIGIS
+          information is added.
         </p>
       </div>
     </div>
