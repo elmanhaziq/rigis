@@ -29,6 +29,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
   const svgRef = useRef<SVGSVGElement>(null);
   const frame = useRef(0);
   const [active, setActive] = useState<string | null>(null);
+  const lastTap = useRef<{ pointerType: string; wasActive: boolean } | null>(null);
 
   const model = useMemo(() => {
     const people = data.profiles.map((p, i) => ({
@@ -193,13 +194,21 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
                 key={profile.id}
                 href={`/people/${profile.slug}/`}
                 aria-label={`${displayName(profile)}, ${profile.position ?? "researcher"}`}
-                onMouseEnter={() => setActive(profile.id)}
-                onMouseLeave={() => setActive(null)}
-                onFocus={() => setActive(profile.id)}
-                onBlur={() => setActive(null)}
+                // Hover previews only for a real mouse: touch browsers emulate hover
+                // right before the tap, which would skip the preview step.
+                onPointerEnter={(e) => e.pointerType === "mouse" && setActive(profile.id)}
+                onPointerLeave={(e) => e.pointerType === "mouse" && setActive(null)}
+                onPointerDown={(e) => {
+                  lastTap.current = { pointerType: e.pointerType, wasActive: active === profile.id };
+                }}
+                // Keyboard focus previews; focus caused by a tap does not.
+                onFocus={(e) => e.currentTarget.matches(":focus-visible") && setActive(profile.id)}
+                onBlur={() => setActive((current) => (current === profile.id ? null : current))}
                 onClick={(e) => {
-                  // Touch: first tap explains, second tap opens the profile.
-                  if (window.matchMedia("(hover: none)").matches && active !== profile.id) {
+                  // Touch: the first tap shows the preview, a second tap opens the profile.
+                  const tap = lastTap.current;
+                  lastTap.current = null;
+                  if (tap && tap.pointerType !== "mouse" && !tap.wasActive) {
                     e.preventDefault();
                     setActive(profile.id);
                   }
