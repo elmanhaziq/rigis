@@ -1,0 +1,220 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * RIGIS design tokens
+ * Brand: navy #10243A / #1D4263, paper #F4F6F8, slate #9AA9B8, brass #B89B68.
+ * Brass and slate fail 4.5:1 as text on light surfaces, so they are used for
+ * rules, borders and ornament only. Text uses --ink / --muted-foreground, and
+ * brass text only ever sits on navy (6:1).
+ */
+:root {
+  --navy-950: #0b1a2a;
+  --navy-900: #10243a;
+  --navy-800: #1d4263;
+  --navy-700: #2a5680;
+  --paper: #f4f6f8;
+  --slate: #9aa9b8;
+  --brass: #b89b68;
+  --brass-ink: #7d6232;
+
+  --background: #f4f6f8;
+  --foreground: #142333;
+  --card: #ffffff;
+  --card-foreground: #142333;
+  --popover: #ffffff;
+  --popover-foreground: #142333;
+  --primary: #10243a;
+  --primary-foreground: #ffffff;
+  --secondary: #1d4263;
+  --secondary-foreground: #ffffff;
+  --muted: #e9edf1;
+  --muted-foreground: #4b5b6c;
+  --accent: #eaeef2;
+  --accent-foreground: #10243a;
+  --destructive: #b42318;
+  --success: #1f6f4a;
+  --warning: #8a5a00;
+  --border: #d8dfe6;
+  --input: #c9d2db;
+  --ring: #1d4263;
+  --chart-1: #10243a;
+  --chart-2: #1d4263;
+  --chart-3: #b89b68;
+  --chart-4: #9aa9b8;
+  --chart-5: #2a5680;
+  --radius: 0.375rem;
+  --sidebar: #10243a;
+  --sidebar-foreground: #e6ebf0;
+  --sidebar-primary: #b89b68;
+  --sidebar-primary-foreground: #10243a;
+  --sidebar-accent: #1d4263;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #1d4263;
+  --sidebar-ring: #b89b68;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-manrope);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-navy-950: var(--navy-950);
+  --color-navy-900: var(--navy-900);
+  --color-navy-800: var(--navy-800);
+  --color-navy-700: var(--navy-700);
+  --color-paper: var(--paper);
+  --color-slate-brand: var(--slate);
+  --color-brass: var(--brass);
+  --color-brass-ink: var(--brass-ink);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "cv11", "ss01";
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading text-navy-900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--navy-800);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--navy-800);
+    outline-offset: 2px;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  /* Small uppercase metadata label used above headings and in lists. */
+  .eyebrow {
+    @apply font-sans text-[0.75rem] font-semibold tracking-[0.14em] uppercase text-muted-foreground;
+  }
+  /* Short brass rule used as an editorial section marker. */
+  .rule-brass {
+    @apply block h-px w-10 bg-brass;
+  }
+  .container-page {
+    @apply mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-10;
+  }
+  .prose-rigis {
+    @apply text-[1.0625rem] leading-[1.75] text-foreground/90;
+  }
+  .prose-rigis p + p {
+    @apply mt-5;
+  }
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 220ms ease-out;
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Progressive-enhancement scroll reveal: only where supported and motion is OK. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
