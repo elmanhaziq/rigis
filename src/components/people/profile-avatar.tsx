@@ -21,7 +21,7 @@ export function ProfileAvatar({
         alt={`Photograph of ${name}`}
         loading="lazy"
         decoding="async"
-        className={cn("aspect-[4/5] w-full object-cover", className)}
+        className={cn("aspect-[4/5] w-full bg-white object-cover object-[50%_15%]", className)}
       />
     );
   }

@@ -3,8 +3,10 @@
  *
  * Entered by hand until members can manage their own profiles in the portal
  * (Phase 2), at which point these move into the database. Profile facts and
- * publication details were taken from each member's public Google Scholar
- * profile (October 2026) and must be confirmed by the member before launch.
+ * publication details come from each member's public Google Scholar profile
+ * (October 2026); the publications were confirmed by the group for
+ * publication. Photographs were supplied by the group. Biographies are drafts
+ * written from the Scholar profiles and should be replaced by the members.
  *
  * Publications are stored once and linked to every RIGIS author, so papers
  * co-written by several members appear on each of their profiles.
@@ -35,6 +37,7 @@ export const memberProfiles: PublicProfile[] = [
     ...empty,
     id: SHUZLINA,
     slug: "shuzlina-abdul-rahman",
+    photoUrl: "/images/people/shuzlina-abdul-rahman.webp",
     fullName: "Shuzlina Abdul Rahman",
     professionalTitle: "Assoc. Prof. Dr.",
     position: "Associate Professor",
@@ -48,6 +51,7 @@ export const memberProfiles: PublicProfile[] = [
     ...empty,
     id: SOFIANITA,
     slug: "sofianita-mutalib",
+    photoUrl: "/images/people/sofianita-mutalib.webp",
     fullName: "Sofianita Mutalib",
     professionalTitle: "Assoc. Prof.",
     position: "Associate Professor",
@@ -61,6 +65,7 @@ export const memberProfiles: PublicProfile[] = [
     ...empty,
     id: SHARIFALILLAH,
     slug: "sharifalillah-nordin",
+    photoUrl: "/images/people/sharifalillah-nordin.webp",
     fullName: "Sharifalillah Nordin",
     professionalTitle: "Dr.",
     position: "Senior Lecturer",
@@ -74,6 +79,7 @@ export const memberProfiles: PublicProfile[] = [
     ...empty,
     id: AZLIZA,
     slug: "azliza-mohd-ali",
+    photoUrl: "/images/people/azliza-mohd-ali.webp",
     fullName: "Azliza Mohd Ali",
     professionalTitle: "Dr.",
     position: null,
@@ -263,7 +269,6 @@ export const memberPublications: Publication[] = [
   }),
   pub({
     id: "pub-2026-hotel-reviews",
-    // Title as listed on Google Scholar, which appears truncated — confirm with the author.
     title: "Sentiment Analysis of Hotel Reviews Using Word2Vec Embeddings, TF-IDF and Machine",
     venue: "Smart Computing Paradigms: Proceedings of the Seventh International Conference on Smart Computing and Informatics (SCI 2025), Vol. 4, Springer Nature, p. 346",
     year: 2026,
