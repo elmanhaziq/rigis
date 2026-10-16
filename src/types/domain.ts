@@ -71,6 +71,12 @@ export interface ResearchArea {
    * never presented as verified research activity.
    */
   interestKeywords: string[];
+  /**
+   * Terms matched (as whole words) against members' own publication titles.
+   * A researcher with enough matching papers is linked to the area; the UI
+   * labels these links "papers on this topic", matched by title.
+   */
+  topicKeywords: string[];
   status: ContentStatus;
   isDemo: boolean;
 }
@@ -131,6 +137,8 @@ export interface Publication {
   authors: PublicationAuthor[];
   /** True when only the RIGIS member is known; the full list is at the source link. */
   authorsIncomplete?: boolean;
+  /** Research areas whose topic keywords appear in the title (derived when the dataset is built). */
+  areaIds?: string[];
   isDemo: boolean;
 }
 

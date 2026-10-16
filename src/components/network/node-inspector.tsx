@@ -22,11 +22,12 @@ export const kindIcon: Record<NetworkNodeKind, typeof User> = {
   publication: BookOpen,
 };
 
-const verified: Record<NetworkEdgeKind, boolean> = {
-  participates: true,
-  belongs: true,
-  authored: true,
-  interest: false,
+const basisLabel: Record<NetworkEdgeKind, string> = {
+  participates: "Verified",
+  belongs: "Verified",
+  authored: "Verified",
+  topic: "By title",
+  interest: "Declared",
 };
 
 /**
@@ -116,10 +117,10 @@ export function NodeInspector({
               <span
                 className={cn(
                   "rounded-sm px-1.5 py-0.5 text-[0.6875rem] font-semibold tracking-wide uppercase",
-                  verified[kind] ? "bg-success-bg text-success" : "bg-muted text-muted-foreground",
+                  basisLabel[kind] === "Verified" ? "bg-success-bg text-success" : "bg-muted text-muted-foreground",
                 )}
               >
-                {verified[kind] ? "Verified" : "Declared"}
+                {basisLabel[kind]}
               </span>
               <span className="text-muted-foreground tabular-nums">{items.length}</span>
             </h3>

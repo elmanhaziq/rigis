@@ -6,7 +6,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowRight, FlaskConical, Info, Network } from "lucide-react";
 import type { PublicDataset } from "@/lib/data";
 import { displayName } from "@/lib/data/selectors";
-import { projectsForArea, researchersForArea } from "@/lib/data/relationships";
+import { describeAreaLink, projectsForArea, researchersForArea } from "@/lib/data/relationships";
 import { ProfileAvatar } from "@/components/people/profile-avatar";
 import { StatusTag } from "@/components/layout/demo-banner";
 import { projectHref } from "./project-card";
@@ -171,11 +171,11 @@ export function AreaExplorer({
               <h4 className="eyebrow">Researchers</h4>
               {researchers.length === 0 ? (
                 <p className="mt-3 text-[0.9375rem] text-muted-foreground">
-                  No researcher has listed this area among their interests yet, and no approved project is linked to it.
+                  No researcher has papers on this topic or lists it among their interests yet, and no approved project is linked to it.
                 </p>
               ) : (
                 <ul className="mt-3 grid border-t border-border sm:grid-cols-2 sm:gap-x-8">
-                  {researchers.map(({ profile, basis, matchedInterests }) => (
+                  {researchers.map(({ profile, ...link }) => (
                     <li key={profile.id}>
                       <Link
                         href={`/people/${profile.slug}/`}
@@ -196,7 +196,7 @@ export function AreaExplorer({
                             {displayName(profile)}
                           </span>
                           <span className="block text-[0.8125rem] leading-snug text-muted-foreground">
-                            {basis === "project" ? "Project team member" : `Stated interest: ${matchedInterests.join(", ")}`}
+                            {link.basis === "project" ? "Project team member" : describeAreaLink(link)}
                           </span>
                         </span>
                       </Link>
@@ -204,10 +204,10 @@ export function AreaExplorer({
                   ))}
                 </ul>
               )}
-              {researchers.some((r) => r.basis === "interest") && (
+              {researchers.some((r) => r.basis !== "project") && (
                 <p className="mt-3 flex items-start gap-2 text-[0.8125rem] text-muted-foreground">
                   <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
-                  Interest links come from the research interests each researcher lists on their profile, not from project records.
+                  Papers on this topic are the researcher&rsquo;s own publications whose titles mention the area&rsquo;s topics; stated interests are the ones they list on their profile. Neither comes from project records.
                 </p>
               )}
             </div>

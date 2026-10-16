@@ -132,7 +132,7 @@ Research areas each carry an `accent` (markers and graph nodes only).
 Contrast: every text/background pairing meets WCAG AA (automated scan of
 1,019 text elements across all pages at 1280px and 390px; lowest 4.56:1).
 Soft purple, slate and gold are never used for body text on light surfaces.
-Display type is Newsreader (variable serif with optical sizes); interface and body text use Inter. Page headers use the shared `PageMasthead` component. See `docs/design-audit.md` for the design rationale. Statuses always pair an icon and label with
+Display type is Source Serif 4 (variable serif with optical sizes); interface and body text use Source Sans 3. Page headers use the shared `PageMasthead` component. See `docs/design-audit.md` for the design rationale. Statuses always pair an icon and label with
 colour, and all motion respects `prefers-reduced-motion`.
 
 ### Windows build note

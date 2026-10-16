@@ -97,7 +97,7 @@ export function NetworkExperience({ data }: { data: PublicDataset }) {
     const set = new Set([id]);
     for (const e of graph.edges) {
       if (e.kind === "belongs" && e.target === id) set.add(e.source);
-      if (e.kind === "interest" && e.target === id) set.add(e.source);
+      if ((e.kind === "interest" || e.kind === "topic") && e.target === id) set.add(e.source);
     }
     for (const e of graph.edges) if (e.kind === "participates" && set.has(e.target)) set.add(e.source);
     return set;
@@ -408,6 +408,7 @@ function Legend() {
       <li className="flex items-center gap-2"><span className="size-2.5 rotate-45 bg-navy-800 ring-1 ring-brass" aria-hidden="true" />Research area (accent per discipline)</li>
       <li className="flex items-center gap-2"><span className="h-px w-5 bg-slate-brand" aria-hidden="true" />Authored (verified)</li>
       <li className="flex items-center gap-2"><span className="h-0.5 w-5 bg-purple-200 ring-1 ring-purple-400" aria-hidden="true" />Selected connection</li>
+      <li className="flex items-center gap-2"><span className="h-0.5 w-5 bg-purple-400" aria-hidden="true" />Papers on this topic (matched by title)</li>
       <li className="flex items-center gap-2"><span className="h-0 w-5 border-t-2 border-dashed border-purple-400" aria-hidden="true" />Stated interest (declared)</li>
     </ul>
   );

@@ -8,6 +8,11 @@
  * researcher's own listed interests contains the keyword. Keep them specific:
  * a broad term such as "artificial intelligence" would link everyone to
  * everything and say nothing.
+ *
+ * topicKeywords connect researchers to an area through their own papers: a
+ * paper counts when one of the terms appears in its title as a whole word
+ * (plurals included). These are shown as "papers on this topic, matched by
+ * title", never as a confirmed specialism.
  */
 import type { ResearchArea } from "@/types/domain";
 
@@ -24,6 +29,7 @@ export const researchAreas: ResearchArea[] = [
     description:
       "Learning algorithms, predictive modelling, data mining and the analysis of complex, real-world datasets.",
     interestKeywords: ["machine learning", "data analytics", "data mining", "anomaly detection", "predictive"],
+    topicKeywords: ["machine learning", "deep learning", "data mining", "classification", "classifier", "clustering", "prediction", "predicting", "predictive", "forecasting", "neural network", "regression", "random forest", "support vector machine", "anomaly detection", "feature selection", "ensemble"],
   },
   {
     ...provisional,
@@ -35,6 +41,7 @@ export const researchAreas: ResearchArea[] = [
     description:
       "Image understanding, object detection and visual analysis for scientific and applied settings.",
     interestKeywords: ["computer vision", "image processing", "imaging", "object detection"],
+    topicKeywords: ["computer vision", "image", "imaging", "object detection", "yolo", "convolutional", "cnn", "face", "facial", "segmentation", "video", "handwritten", "handwriting", "ocr", "visual"],
   },
   {
     ...provisional,
@@ -46,6 +53,7 @@ export const researchAreas: ResearchArea[] = [
     description:
       "Computational methods for understanding, generating and analysing human language, including sentiment analysis and large language models.",
     interestKeywords: ["natural language", "nlp", "text mining", "sentiment", "language model"],
+    topicKeywords: ["natural language", "nlp", "sentiment", "text", "text mining", "bert", "language model", "tweet", "twitter", "topic modelling", "topic modeling", "chatbot", "code-mixed", "opinion mining", "named entity"],
   },
   {
     ...provisional,
@@ -57,6 +65,7 @@ export const researchAreas: ResearchArea[] = [
     description:
       "Optimisation, reasoning and recommender systems that help people make better decisions.",
     interestKeywords: ["decision support", "recommender", "optimisation", "optimization"],
+    topicKeywords: ["decision support", "decision making", "decision-making", "recommender", "recommendation", "optimisation", "optimization", "expert system", "fuzzy decision", "scheduling", "genetic algorithm", "multi-criteria"],
   },
   {
     ...provisional,
@@ -68,6 +77,7 @@ export const researchAreas: ResearchArea[] = [
     description:
       "Sensing, edge computing and intelligent behaviour in connected and embedded devices.",
     interestKeywords: ["internet of things", "iot", "edge computing", "embedded"],
+    topicKeywords: ["internet of things", "iot", "embedded system", "sensor", "wearable", "arduino", "raspberry pi", "robot", "robotic", "smart home", "drone", "uav"],
   },
   {
     ...provisional,
@@ -79,5 +89,6 @@ export const researchAreas: ResearchArea[] = [
     description:
       "Transparency, fairness, accountability and human-centred evaluation of intelligent systems.",
     interestKeywords: ["explainable", "responsible ai", "fairness", "ai ethics"],
+    topicKeywords: ["explainable", "explainability", "interpretable", "interpretability", "fairness", "fairness-aware", "bias", "ethics", "ethical", "responsible ai", "trustworthy"],
   },
 ];

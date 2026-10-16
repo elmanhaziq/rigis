@@ -18,7 +18,7 @@ export default async function NetworkPage() {
       <PageMasthead
         section="Research network"
         title="A map of who works with whom"
-        dek="Researchers, the papers they write together, their projects and research areas. Solid links come from author lists and approved project records; dashed links are interests researchers list themselves."
+        dek="Researchers, the papers they write together, their projects and research areas. Links come from author lists and approved project records; a researcher joins an area through their own papers on that topic (matched by title) or, dashed, an interest they list themselves."
         facts={[
           { value: data.profiles.length, label: "Researchers" },
           { value: sharedPublications(data).length, label: "Papers written together" },

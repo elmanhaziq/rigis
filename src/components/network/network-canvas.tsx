@@ -87,6 +87,7 @@ const edgeStyle: Record<string, React.CSSProperties> = {
   participates: { stroke: palette.purple400 },
   belongs: { stroke: palette.gold },
   authored: { stroke: palette.slate },
+  topic: { stroke: palette.purple400 },
   interest: { stroke: palette.purple400, strokeDasharray: "5 5" },
 };
 
@@ -139,7 +140,7 @@ function Canvas({ graph, selectedId, hoveredId, scope, fitToken, onSelect, onHov
             ? scope.has(e.source) && scope.has(e.target)
             : true;
         // Draw every edge left-to-right across the columns (areas | researchers | work).
-        const reversed = e.kind === "interest" || e.kind === "belongs";
+        const reversed = e.kind === "interest" || e.kind === "topic" || e.kind === "belongs";
         return {
           id: e.id,
           source: reversed ? e.target : e.source,

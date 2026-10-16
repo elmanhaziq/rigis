@@ -23,9 +23,11 @@ import {
 import { memberProfiles, memberPublications } from "./members";
 import { projects } from "./projects";
 import { researchAreas } from "./areas";
+import { topicAreaIds } from "./relationships";
 
 const profiles = memberProfiles;
-const publications = memberPublications;
+// Each paper is tagged with the areas its title matches, once, at build time.
+const publications = memberPublications.map((p) => ({ ...p, areaIds: topicAreaIds(researchAreas, p.title) }));
 
 export interface PublicDataset {
   profiles: PublicProfile[];

@@ -10,7 +10,7 @@ import {
   publicationsForProfile,
 } from "@/lib/data/selectors";
 import { ProfileAvatar } from "./profile-avatar";
-import { areaLinksForProfile, areasForInterest, collaboratorsFor } from "@/lib/data/relationships";
+import { areaLinksForProfile, areasForInterest, collaboratorsFor, describeAreaLink } from "@/lib/data/relationships";
 import { ProjectCard } from "@/components/research/project-card";
 import { PublicationList } from "@/components/research/publication-list";
 import { DemoTag } from "@/components/layout/demo-banner";
@@ -195,16 +195,14 @@ export function ProfileView({ profile, data }: { profile: PublicProfile; data: P
             <section aria-labelledby="areas-title">
               <h2 id="areas-title" className="eyebrow">Research areas</h2>
               <ul className="mt-3">
-                {areaLinks.map(({ area, basis, matchedInterests }) => (
-                  <li key={area.id}>
+                {areaLinks.map((link) => (
+                  <li key={link.area.id}>
                     <Link
-                      href={`/research/?area=${area.slug}`}
+                      href={`/research/?area=${link.area.slug}`}
                       className="flex min-h-12 flex-col justify-center border-b border-border py-2 text-[0.9375rem] text-purple-700 hover:text-navy-900"
                     >
-                      {area.name}
-                      <span className="text-xs text-muted-foreground">
-                        {basis === "project" ? "Through approved projects" : `Stated interest: ${matchedInterests.join(", ")}`}
-                      </span>
+                      {link.area.name}
+                      <span className="text-xs text-muted-foreground">{describeAreaLink(link)}</span>
                     </Link>
                   </li>
                 ))}

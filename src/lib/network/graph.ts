@@ -1,7 +1,7 @@
 import type { PublicDataset } from "@/lib/data";
 import type { ContentStatus } from "@/types/domain";
 import { displayName, initials } from "@/lib/data/selectors";
-import { areasForInterest, memberAuthors } from "@/lib/data/relationships";
+import { areaLinksForProfile, memberAuthors } from "@/lib/data/relationships";
 
 export type NetworkNodeKind = "researcher" | "project" | "area" | "publication";
 
@@ -26,9 +26,10 @@ export type NetworkNode = {
  * - participates  researcher -> project      verified (approved project team)
  * - belongs       project -> area            verified (approved project tags)
  * - authored      researcher -> publication  verified (published authorship)
+ * - topic         researcher -> area         derived (their own papers whose titles match the area)
  * - interest      researcher -> area         declared (the researcher's own stated interest)
  */
-export type NetworkEdgeKind = "participates" | "belongs" | "authored" | "interest";
+export type NetworkEdgeKind = "participates" | "belongs" | "authored" | "topic" | "interest";
 
 export interface NetworkEdge {
   id: string;
@@ -69,6 +70,7 @@ export const edgeKindLabel: Record<NetworkEdgeKind, string> = {
   participates: "Works on project",
   belongs: "Project in research area",
   authored: "Co-authored publication",
+  topic: "Papers on this topic",
   interest: "Stated research interest",
 };
 
@@ -173,19 +175,19 @@ export function buildNetworkGraph(data: PublicDataset, options: GraphOptions = d
     }
   }
 
-  if (options.interests) {
-    for (const profile of data.profiles) {
-      const matched = new Map<string, string[]>();
-      for (const interest of profile.researchInterests) {
-        for (const area of areasForInterest(data.areas, interest)) {
-          matched.set(area.id, [...(matched.get(area.id) ?? []), interest]);
-        }
-      }
-      for (const [areaId, interests] of matched) {
-        const rKey = addResearcher(profile.id)!;
-        const aKey = addArea(areaId)!;
-        edges.push({ id: `${rKey}~${aKey}`, source: rKey, target: aKey, kind: "interest", label: interests.join(", ") });
-      }
+  // One researcher -> area edge: papers on the topic when there are enough,
+  // otherwise a stated interest (shown only when interest links are on).
+  for (const profile of data.profiles) {
+    for (const link of areaLinksForProfile(data, profile)) {
+      if (link.basis === "project") continue; // already reached through the project
+      if (link.basis === "interest" && !options.interests) continue;
+      const rKey = addResearcher(profile.id)!;
+      const aKey = addArea(link.area.id)!;
+      edges.push(
+        link.basis === "topic"
+          ? { id: `${rKey}#${aKey}`, source: rKey, target: aKey, kind: "topic", label: `${link.topicPapers} papers, matched by title` }
+          : { id: `${rKey}~${aKey}`, source: rKey, target: aKey, kind: "interest", label: link.matchedInterests.join(", ") },
+      );
     }
   }
 

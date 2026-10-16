@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { useReducedMotion } from "motion/react";
 import type { PublicDataset } from "@/lib/data";
 import { displayName } from "@/lib/data/selectors";
-import { areasForInterest, collaboratorsFor, memberAuthors, recentWindow } from "@/lib/data/relationships";
+import { areaLinksForProfile, collaboratorsFor, memberAuthors, recentWindow } from "@/lib/data/relationships";
 import { cn } from "@/lib/utils";
 import { palette } from "@/config/palette";
 
@@ -67,11 +67,11 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
       })
       .filter((p) => p !== null);
 
-    const interestLinks = people.flatMap(({ profile }) => {
-      const ids = new Set(profile.researchInterests.flatMap((i) => areasForInterest(data.areas, i).map((a) => a.id)));
-      return [...ids].map((areaId) => ({ profileId: profile.id, areaId }));
-    });
-    return { people, areas, pubs, interestLinks, posOf };
+    // Papers on the topic or a stated interest (see areaLinksForProfile).
+    const areaLinks = people.flatMap(({ profile }) =>
+      areaLinksForProfile(data, profile).map((l) => ({ profileId: profile.id, areaId: l.area.id })),
+    );
+    return { people, areas, pubs, areaLinks, posOf };
   }, [data]);
 
   const { since } = recentWindow(data);
@@ -82,7 +82,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
     return {
       pubs: model.pubs.filter((p) => p.authors.includes(active)).length,
       collaborators: collaboratorsFor(data, active).length,
-      areas: model.interestLinks.filter((l) => l.profileId === active).length,
+      areas: model.areaLinks.filter((l) => l.profileId === active).length,
     };
   }, [active, model, data]);
 
@@ -124,7 +124,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
         <g style={layer(14)} aria-hidden="true">
           <circle cx={C} cy={C} r={R_AREAS} fill="none" stroke={palette.purple400} strokeOpacity="0.35" />
           <circle cx={C} cy={C} r={R_PEOPLE + 62} fill="none" stroke={palette.purple400} strokeOpacity="0.14" />
-          {model.interestLinks.map(({ profileId, areaId }) => {
+          {model.areaLinks.map(({ profileId, areaId }) => {
             const a = areaPos.get(areaId)!;
             const p = model.posOf.get(profileId)!;
             return (
@@ -139,7 +139,7 @@ export function HeroConstellation({ data }: { data: PublicDataset }) {
             );
           })}
           {model.areas.map(({ area, pos }) => {
-            const on = !active || model.interestLinks.some((l) => l.profileId === active && l.areaId === area.id);
+            const on = !active || model.areaLinks.some((l) => l.profileId === active && l.areaId === area.id);
             const right = pos.x >= C;
             return (
               <g key={area.id} style={{ opacity: on ? 1 : 0.3, transition: "opacity 250ms" }}>
